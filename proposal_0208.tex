@@ -1,0 +1,1164 @@
+
+
+
+% !TEX encoding = UTF-8 Unicode
+%
+%%%%% Preamble
+\documentclass[a4paper,12pt]{article}%scrartcl
+
+%\usepackage[T1]{fontenc}
+%\usepackage{fontspec}
+%\usepackage{courier}
+%\setmainfont{Courier New}
+\usepackage[nodisplayskipstretch]{setspace}
+%\usepackage[protrusion=true]{microtype}              % Better typography
+\usepackage{fancyhdr}    %Needed to define custom headers/footers
+\usepackage{url}
+\usepackage{amssymb, amsmath,amsthm}                                        % Math packages
+\usepackage[dvips]{graphicx}    
+\usepackage{color}                                     % Add figures
+%\usepackage{graphicx}
+\usepackage{enumitem} % Adjust item space in a list
+\usepackage{multirow}
+\usepackage{footnote}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{lastpage}
+
+%\usepackage[tight,footnotesize]{subfigure}
+
+%\setstretch{5.0}
+\usepackage{hyperref}
+\usepackage{bm} % Bold and italic math fonts
+\usepackage{arydshln}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{titlesec}
+
+\usepackage
+[
+        a4paper,% other options: a3paper, a5paper, etc
+        left=1.2cm,
+        right=1.2cm,
+        top=1.2cm,
+        bottom=1.2cm,
+        % use vmargin=2cm to make vertical margins equal to 2cm.
+        % us  hmargin=3cm to make horizontal margins equal to 3cm.
+        % use margin=3cm to make all margins  equal to 3cm.
+]
+{geometry}
+
+
+%\usepackage[paperwidth=8.5in,left=1.0in,right=1.0in,top=1.0in,bottom=1.0in,
+%  paperheight=11.0in]{geometry}
+
+% make bibliography single-spaced
+\let\oldthebibliography=\thebibliography
+\let\endoldthebibliography=\endthebibliography
+\renewenvironment{thebibliography}[1]{%
+\begin{oldthebibliography}{#1}%
+\setlength{\parskip}{0ex}%
+\setlength{\itemsep}{0ex}%
+}%
+{%
+\end{oldthebibliography}%
+}
+
+%\addtolength{\oddsidemargin}{-.875in}
+%\addtolength{\evensidemargin}{-.875in}
+%\addtolength{\textwidth}{1.65in}
+%
+%\addtolength{\topmargin}{-.875in}
+%\addtolength{\textheight}{1.65in}
+
+\newcommand\n{\mbox{\quad}} % add ``\n'' to indent 
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert} % matrix norm
+
+\newtheorem{Rem}{Remark}
+\newtheorem*{Prob*}{Problem Statement}
+
+\setlist[itemize]{noitemsep, topsep=0pt}
+
+%% Customize title using titlespec package
+%\titleformat{\section}{\normalfont\Large\filcenter\bfseries}{\thesection}{1em}{\uppercase}
+
+
+%\newenvironment{packed_itemize}{
+%\begin{itemize}
+%%  \setlength{\itemsep}{1pt}
+%%  \setlength{\parskip}{0pt}
+%%  \setlength{\parsep}{0pt}
+%%  \setlength{\topsep}{0pt}
+%}{\end{itemize}}
+
+%%%% Headers and footers
+
+
+
+%%% Advanced verbatim environment
+%\usepackage{verbatim}
+%\usepackage{fancyvrb}
+%\DefineShortVerb{\|}
+
+
+%\def \myMode {} 
+\ifx \myMode \undefined
+% --- Chinese in Windows (\my mode is empty) ---
+	\usepackage{fontspec}                  %加這個就可以設定字體
+	\setmainfont[Mapping=tex-text]{Courier New}
+	%\setmainfont[Mapping=tex-text]{Times New Roman} % rm
+\setsansfont[Mapping=tex-text]{Arial}           % sf
+\setmonofont{Courier New} 
+	\usepackage[BoldFont]{xeCJK}           %讓中英文字體分開設置
+	%\setCJKmainfont{Microsoft JhengHei}
+	\setCJKmainfont{標楷體}                 %設定中文為系統上的字型，而英文不變動，使用原TeX字型
+	\XeTeXlinebreaklocale "zh"             %這兩行一定要加，中文才能自動換行
+	\XeTeXlinebreakskip = 0pt plus 1pt     %這兩行一定要加，中文才能自動換行
+	\setlength{\parskip}{0.3cm} %設定段落之間的距離
+	\linespread{1.0}\selectfont %設定行距
+	%\renewcommand{\baselinestretch}{1.5}
+\else
+	\usepackage{fontspec} 
+	\setmainfont{Courier New}
+	\usepackage[BoldFont]{xeCJK}           %讓中英文字體分開設置
+	\setCJKmainfont[AutoFakeBold=6]{Kaiti TC}
+	%\setromanfont[AutoFakeBold=6]{Songti TC}
+	%\setromanfont{Apple LiGothic}
+	% option: Apple LiSung Light
+	\XeTeXlinebreaklocale "zh"             %這兩行一定要加，中文才能自動換行
+	\XeTeXlinebreakskip = 0pt plus 1pt     %這兩行一定要加，中文才能自動換行
+	\setlength{\parskip}{0.3cm} %設定段落之間的距離
+	\linespread{1.1}\selectfont %設定行距
+\fi
+
+
+
+\pagestyle{fancy}
+
+%\fancypagestyle{plain}{ %
+\fancyhead{} % 清除所有頁首設定
+%\fancyhf{} % remove everything   
+\fancyfoot{} % 清除所有頁尾設定
+\lfoot{表CM03}
+\rfoot{共~\pageref{LastPage}~頁~第~\thepage~頁}
+\renewcommand{\headrulewidth}{0pt} % 設定頁首多一條粗細是 0.0 pt 的水平線
+%\rhead[]{}
+%\lhead[]{Project Proposal}
+%}
+
+%\usepackage{lastpage}
+
+
+
+%%% Custom sectioning (sectsty package)
+%\usepackage{sectsty}                                % Custom sectioning (see below)
+%\allsectionsfont{%                                  % Change font of al section commands
+%    \usefont{OT1}{bch}{b}{n}%                   % bch-b-n: CharterBT-Bold font
+%%   \hspace{15pt}%                                  % Uncomment for indentation
+%    }
+%
+%\sectionfont{%                                      % Change font of \section command
+%    \usefont{OT1}{bch}{b}{n}%                   % bch-b-n: CharterBT-Bold font
+%    \sectionrule{0pt}{0pt}{-5pt}{0.8pt}%    % Horizontal rule below section
+%    }
+
+
+%%% Begin document
+\begin{document}
+
+\graphicspath{{./figure/}}
+
+%\begin{center}
+%{\LARGE{\bf 
+%\title{Blockage Effect in High-Resolution Millimeter Wave Communications}
+%}
+%\end{center}
+%\date{}
+%\maketitle
+
+
+
+
+%\newpage
+%===========================================
+% Proposed work
+%===========================================
+\setcounter{page}{1}
+%\singlespacing
+%Proposed work
+%\begin{itemize}
+% \item Investigate energy-efficient relay site planning in HetSNets.
+% \item Investigate energy-efficient relay selection and cooperative
+% transmission methods.
+%\end{itemize}
+
+\noindent \textbf{三、研究計畫內容：}
+
+
+\noindent (一)	\underline{研究計畫之背景。}
+
+\noindent \textbf{A. 研究背景}
+
+\n 隨著人工智慧與大數據等新興技術的大幅躍進，未來人類在交通、醫療、智慧城市等方面將更有品質與保障，而高速及穩定的無線傳輸將是這些應用服務成功普及的關鍵。根據國際行動通訊組織 (International Mobile Communications, IMT)針對2020年後的行動通訊所提出的發展框架與技術目標 (即所謂的IMT-2020)，3GPP標準組織正交快腳步制定滿足IMT-2020之第五代行動通訊5G技術標準規格。我國無線通訊產業在政府政策面的引導下，已投入大量研發資金與人力，但主要系統規格與晶片技術仍受制於由國際大廠，限制了我國產業的投資報酬率與科技發展規模。有鑑於此，政府相關單位與國內廠商在後4G時代便積極參與國際標準組織，以期在5G系統與技術標準發展過程中，扮演更關鍵的腳色，利用我國半導體與高科技產業的優勢，於下世代行動通訊技術發展取得優勢。
+
+\noindent \textbf{B. 研究動機}
+
+\n 為達成高速無線傳輸，能夠同時對多用戶傳輸多層次訊號的多天線多重輸入輸出技術 (MU-MIMO, Multi-User Multi-Input Multi-Output) 為近代無線通訊的重要技術之一，包括主要行動通訊系統使用的3GPP LTE(Long Term Evolution)標準與無線區域網路的IEEE 802.11 ac規格，均導入此一技術，其中3GPP自Release 8開始支援MU-MIMO，此初期版本在支援MU-MIMO有諸多限制，包含取得通道資訊的方式、基地台可使用的預編碼僅侷限於事先定義的碼簿中、對個別用戶僅支援單一訊號層等，Release 10則制定了特定的領航訊號DM-RS，基地台可同時重送4個資料流，但分配給每個用戶最多2個資料流，Release 12則加強對通道資訊量測的準確性，Rele9ase 13在下行支援了MUST (Multi-User Superposition Transmission)的新技術以及二維天線陣列，賦予MU-MIMO更多設計彈性，而扮演5G技術前哨站的Release 14和Release 15亦針對通道量測所使用的參考訊號有相關改進。
+
+\n 有鑑於sub-6 GHz頻段日趨飽和，為大幅提升無線傳輸速度，較寬裕的毫米波頻段已被納入第五代通訊系統標準，稱為NR (New Radio)。毫米波雖可提供5G所需的頻寬，但其傳送距離短、穿透力較差、且具高度稀疏性，難以提供MU-MIMO所需的通道條件，為達成Gbps傳輸速度的5G目標，支援大規模天線陣列（Massive MIMO）與三維波束成形(3D beamforming）技術的毫米波系統將是發展重點，而在LTE系統已被提出的多點協同機制 (Coordinated Multi-Point, CoMP)，也受到3GPP工作會議的重視，正被廣泛討論中。為求得系統效能與複雜度的平衡，相關系統參數與通道量測方式需要仔細評估。
+
+\noindent \textbf{C. 研究目標}
+
+\n 著眼於5G技術與標準制定進度的快速發展，本研究案將針對5G發展目標之一的eMBB，也就是為提高現有通訊服務之傳輸效能而發展的\textbf{增強型行動寬頻通訊}，開發可模擬5G eMBB功能之系統層級模擬器(System Level Simulator, SLS)。本計畫將與法人需求單位合作，擴充法人自有的系統模擬平台，驗證即將提案的新技術在5G系統的整體效能，提供我國技術團隊參與標準制定可靠的技術依據。
+
+經與法人需求單位充份討論後，本計畫擬定以	開發可模擬5G eMBB功能之系統層級模擬器為目標，以支援多層次(multi-layer)信號傳送的MIMO技術為達成eMBB為方法，包含兩個議題：MU-MIMO與延伸至6 GHz以上的NR-JT，兩者皆為5G系統的重要技術。
+
+\begin{itemize}
+\item 就MU-MIMO而言，其效能取決於對通道資訊(Channel State Information, CSI)的掌握，而通道資訊的量測與諸多因素密切相關，包含基地台佈建與用戶位置分布、基地台與用戶的天線組態、傳送端的預編碼、接收器的設計、通道資訊的回傳機制、無線資源排程分配等。本計畫將提昇現有SLS對MU-MIMO的支援，提高服務的信號層次數目，以符合3GPP標準發展趨勢。
+\item 為改善6 GHz以上的毫米波通道易受距離衰減與遮蔽效應的影響，CoMP中的協同傳輸(Joint Transmission, JT)將是NR的重要技術，由多個細胞構成合作集合(cooperating set)，其中選出較好的細胞執行JT，以增加NR使用者的速率。本計畫將根據3GPP Ran1 $\#89$會議對NR-JT達成的初步技術發展方針，依據不同層次訊號的傳輸方式，研究對應的實現方式。現有SLS尚未支援NR-JT，本計畫將於SLS新增3GPP支援的模式，並透過系統層級模擬評估各模式的效能，做為技術提案的參考。
+\end{itemize}
+
+基於上述研究目標，本計畫將結合學校與法人的研發能量，加速SLS開發，完成與3GPP相關文件之校準，研究成果將有助於5G技術於3GPP會議之提案，為我國在5G發展取得關鍵地位。
+
+本計畫書後續的架構如下。我們對研究主題相關的文獻進行了詳盡的蒐集與研讀，將現有相關技術整理於C小節。由於相關論文與3GPP技術文件皆以英文撰寫，為免翻譯造成語意誤差，計畫書後將以英文撰寫。
+
+
+%\begin{figure}[!h]
+%\centering
+%\includegraphics[width=0.45\columnwidth]{5G-target.eps}
+%\caption{Target specifications of B4G systems.} \label{fig:B4G-target}
+%\end{figure}
+
+
+%\begin{figure}
+%\centering
+%    \begin{subfigure}[t]{0.25\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth,angle=0,origin=c]{group-based-tracking}
+%        \caption{Group-based beam tracking for $K=10$ users partitioned in $G=4$ groups.}\label{fig:group-tracking}
+%    \end{subfigure}
+%    \quad
+%    \begin{subfigure}[t]{0.3\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth,angle=0,origin=c]{beam-cooperation}
+%        \caption{Illustration of beam cooperation.}\label{fig:beam-cooperation}
+%    \end{subfigure}
+%    \quad
+%    \begin{subfigure}[t]{0.3\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth,angle=0,origin=c]{beam-noma}
+%        \caption{Illustration of beam-based multiple access.}\label{fig:beam-noma}
+%    \end{subfigure}
+%\caption{Illustration of research topics.}    
+%\end{figure}
+
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.65\columnwidth,angle=0,origin=c]{sdr-tx}
+%        \caption{Proposed tramstter structure based on SDR.}\label{fig:sdr-tx}
+%\end{figure}
+
+\noindent \textbf{C. 文獻探討}
+
+MU-MIMO is one of the key technologies to improve the spectral efficiency of wireless systems. Traditionally, the radio spectrum is divided into multiple chunks and the eNB transmits one data stream to a user over a dedicate chunk assigned to the user. With multiple transmit antennas, it is possible to transmit multiple data streams to one or several users simultaneously using the same radio resource. Consequently, high spectral efficiency is possible by exploiting spatial multiplexing provided by multiple antennas.
+
+In LTE, MU-MIMO is a long standing and important function. Since Rel. 8, multiple UEs can be scheduled for the uplink (UL) but only 2 UEs each with one layer are supported at the downlink (DL). At this stage, the uncoded common reference signal (CRS) that is common to all UEs is used o estimate the channel. However, the data stream sent by the eNB is precoded using the precoding matrix selected from the codebook. As a result, the eNB needs to inform the UE about the chosen precoding matrix. This issue has been overcome in the later release by introducing UE-specific RSIn Rel. 10, MU-MIMO can support up to 8 transmit antennas and no more than 4 UEs each with up to 2 layers can be scheduled.
+ 
+Despite the support of MU-MIMO with multiple layers has already specified in LTE, the current SLS is limited to support dual-layer MU-MIMO only. To fulfill the developing trend of 5G that aims to higher spectral efficiency than ever, it is of critical importance to relax the constraint on the number of supported layers. In essential, the performance of MU-MIMO largely depends on three system-wide functions, including the \textbf{channel state information acquisition}, \textbf{transmit precoding scheme}, and \textbf{user selection policy}. In what follows, we elaborate each of the three functions. %To start with, we explain how the dual-layer MU-MIMO works, which serves a good foundation for the further extension to the higher-layer MU-MIMO.
+
+\paragraph{System Model}
+
+To facilitate our discussion, consider a downlink MU-MIMO scenario where the eNB with $N_T$ antennas serves $K$ single-antenna UEs. Let $\mathcal{U}=\{u_i\}_{i=1}^K$ denote the set of
+co-scheduled users. For a particular resource element, the  downlink received signal of all users 
+\begin{equation}\label{eq:rec-sig-mumimo}
+\mathbf{y}=\mathbf{H}^\mathsf{H} \mathbf{P} \mathbf{x} + \mathbf{z}
+\end{equation}
+where $\mathbf{y}=[y_1,\cdots,y_K]^{\mathsf{T}}$ with $y_k$ being the received signal of user $k$, $\mathbf{H}^\mathsf{H}=[\mathbf{h}_1^\mathsf{H}, \cdots, \mathbf{h}_K^\mathsf{H}]^\mathsf{T} \in
+\mathbb{C}^{K \times N_T}$ is the collected user channels with
+$\mathbf{h}_k\in \mathbb{C}^{N_T}$ denoting the channel vector for user
+$k$, $\mathbf{P} \in \mathbb{C}^{N_T \times K}$ denotes the precoding
+matrix, $\mathbf{x} \in \mathbb{C}^{S}$ denotes the signal vector
+transmitted by the eNB for $S$ number of data streams, and $\mathbf{z}\sim \mathcal{CN}(0,
+\mathbf{I}_K)$ is the additive white Gaussian noise vector.
+
+
+%of UE $k$ in the
+%matrix form can be given as
+%\begin{equation}
+%\mathbf{y}_k = \mathbf{h}_k \mathbf{P} \mathbf{x} + \mathbf{z}_k
+%\end{equation}
+
+%=================================================================
+% CSI
+%=================================================================
+\noindent \textbf{C.1 Channel state information (CSI)}
+
+In LTE, precoding is primarily performed based on implicit
+feedback with the following parameters related to channel state information (CSI): \emph{Rank Indicator (RI)}, \emph{Precoding Matrix Indicator (PMI)}, and \emph{Channel Quality Indicator (CQI)}. Since they play the central role on transmit precoding, we explain their definitions in 3GPP specification and how they can be obtained.
+
+
+\paragraph{CQI} 
+
+CQI is the quantized version of signal-to-interference-and-noise ratio (SINR). It is the de facto factor used for link adaptation. Accurate estimate of CQI is critical to the achievable throughput per link and in turn greatly affects the sum rate of the overall system. Unfortunately, an accurate estimate of CQI is challenging because it is measured prior to the actual data transmission which may experience a different channel status from that at the measurement instant. Besides, the exact interference level depends on the user scheduling and resource allocation (RA) strategy. As a result, the interference level can only be estimated based on assumed interference scenarios.
+
+To explain how CQI can be estimatd, we start from the general expression of SINR in the rank 1 SU-MIMO mode as given by
+\begin{equation}\label{eq:sinr-su}
+\text{SINR}_{\text{SU-MIMO}} = \frac{S}{I+N_0}
+\end{equation}
+where $S$ is the average received signal power, $I$ is the average inter-cell interference with rank 1 transmission and $N_0$ is the AWGN. For the MU-MIMO case, suppose $N$ users are multiplexed by sharing the same RB. The received SINR is
+\begin{equation}\label{eq:sinr-mu}
+\text{SINR}_{\text{MU-MIMO}} = \frac{S/N}{\text{MUI}+I+N_0}
+\end{equation}
+Compared with the rank 1 SU-MIMO mode, the received SINR in the MU-MIMo model is further degraded due to MUI, which stems from  the signals of the $(N-1)$ other multiplexed UEs. Since MUI is not considered in the rank 1 SU-MIMO SINR, additional treatments are necessary. 
+
+While accurate CQI is essential, how to estimate SINR and in turn CQI is not specified in the standard. We have conducted a thorough study on the existing approaches as summarized below.
+\begin{itemize}
+\item Simulation-based: The relationship between the SU-MIMO and MU-MIMO CQIs may be found through simulation results~\cite{Zhu2008}. The obtained relation is parameter dependent and thus its usage is restricted.
+%
+\item Offset-based: The MU-MIMO CQI may be obtained from the rank 1 SU-MIMO with an fixed offset value~\cite{Maeaettaenen2009}. This method is simple and backward compatible. However, the constant offset regardless the instantaneous channel condition might not always be optimal. In general, the fixed offset CQI scheme tends to over-estimate the MU-MIMO CQI particularly when the rank 1 SU-MIMO CQI is high.
+\item Adaptive estimate: In the MU-MIMO mode, the UE has the same inter-cell interference and AWGN power level as it is in the SU-MIMO mode. The differences lie in the additional MUI and power sharing when using the MU-MIMO mode. The MUI level depends on the precoders chosen by multiplexed UEs, the fading channel and the receiver type. The CQI estimation for the MU-MIMO mode proposed in~\cite{Nguyen2012} can be stated as follows.  Since accurate estimate of MUI is difficult, the MUI is approximated as a function of the received signal power $S$ given as
+\begin{equation}\label{eq:mui}
+\text{MUI}=\Delta_{\text{MUI}} \times \frac{(N-1)S}{N}
+\end{equation}
+where $\Delta_{\text{MUI}} \in [0,1]$ is a factor indicating the MUI reduction capability of the receiver. For example, with $N=2$ and linear minimum mean square error (LMMSE) receiver, the average value of $\Delta_{\text{MUI}}$ is 0.05. Substituting (\ref{eq:mui}) into (\ref{eq:sinr-mu}), we can express the SINR of the MU-MIMO mode as a function of the SINR of the SU-MIMO mode, i.e.,
+\begin{equation}
+\text{SINR}_{\text{MU-MIMO}} = \frac{1}{ \frac{N}{\text{SINR}_{\text{SU-MIMO}}} + \Delta_{\text{MUI}} \cdot (N-1)  }.
+\end{equation}
+IT can be seen that when $\text{SINR}_{\text{SU-MIMO}}$ is small, the power sharing effect dominates. As $\text{SINR}_{\text{SU-MIMO}}$ increases, the MUI term becomes dominating and $\text{SINR}_{\text{MU-MIMO}}$ gradually reduces.
+\item  Clustered codebook-based:  Suppose UE $k$'s preferred PMI corresponds to the entry $a_{i,j}$ in the clustered codebook $\mathbf{A}$. The interference from a group of rank-1 users can be estimated by considering the PMI index $\vec{a}_i =\{a_{1,j},\cdots,a_{i-1,j},a_{i+1,j},\cdots,a_{M,j}\}$, i.e., those PMIs in the same column as UE $k$'s because they are mostly likely to be scheduled with UE $k$. As to the interference from rank-2 users, it is estimated by finding a rank-2 PMI from $\vec{a}_i$, say $a^*_{:,j}$ such that the total distance between each of the columns of $a^*_{:,j}$ and UE $k$'s preferred PMI $a_{i,j}$ is the largest. Let $\mathbf{W}^{(1)}$ denote the collection of interfering rank-1 precoding matrices and similarly, $\mathbf{W}^{(2)}$ represents the precoding matrix associated with $a^*_{:,j}$. Then the rank-$n$ interference is estimated as
+\begin{equation}
+\text{MUI}_k^{(n)} = \rho_n^2 \mathbf{H}_k \mathbf{W}^{(n)} {\mathbf{W}^{(n)}}^\mathsf{H} \mathbf{H}_k^\mathsf{H}.
+\end{equation}
+where $\rho_n$ is the power scaling factor to satisfy the transmit power constraint as given by
+\begin{equation}
+\rho_n^2 \text{Tr}\left( \sum_{i \in \mathcal{U} } \mathbf{W}_{i} \mathbf{W}_i^\mathsf{H} \right) = P_t.
+\end{equation}
+Finally, the SINR for UE $k$ whose rank is less than 3 is given by
+\begin{equation}
+\text{SINR}=\min_{\substack{\text{MUI}_k^{(n)} \\ n=1,2}} \log\left( \mathbf{I}+  \frac{ \rho_n^2 \mathbf{H}_k \mathbf{W}_k \mathbf{W}_k^\mathsf{H} \mathbf{H}_k^{\mathsf{H}} }{ N_0 \mathbf{I} + \text{MUI}_k^{(n)} }\ \right).
+\end{equation}
+One can see that the above method can be extended to the rank-4 condition. However, the estimated MU-MIMO SINR does not take into account the inter-cell interference. To overcome this drawback, the MU-MIMO SINR should be estimated from SU-MIMO CQI.
+%
+\item Expected lower bound-based: In~\cite{R1-062483}, the CQI of user $k$ is derived as
+\begin{equation}
+\text{CQI}_k = \frac{ \frac{P}{N_t} \norm{\mathbf{h}_k}^2 \cos^2(\theta_k) }{ 1 + \frac{P}{N_t} \norm{\mathbf{h}_k}^2 \sin^2(\theta_k) }
+\end{equation}
+where $\theta_k$ is the angle between $\tilde{\mathbf{h}}_k$ (i.e., the CDI estimated by UE given in (\ref{eq:cdi})) and $\hat{\mathbf{h}}_k$ (i.e., the CDI sent back to the eNB derived as the quantized channel using the predefined codebook according to (\ref{eq:quantized-cdi})) such that $\cos(\theta_k)=|\tilde{\mathbf{h}}_k^\mathsf{H} \hat{\mathbf{h}}_k |$. Then a lower bound on the average SINR is given by
+\begin{equation}\label{eq:sinr-lb}
+\mathbb{E}_I[\text{SINR}] \geq \frac{p_k}{P/N_t}\text{CQI}_k
+\end{equation}
+where $p_k=\frac{P/M}{\norm{\mathbf{w}_{\hat{\mathbf{H}}}(:,k)}^2}$, $\mathbf{w}_{\hat{\mathbf{H}}}$ is the $k$th column of the ZR precoding matrix based on quantized CDI, as given by $\mathbf{w}_{\hat{\mathbf{H}}}=\hat{\mathbf{H}}(\hat{\mathbf{H}}^\mathsf{H} \hat{\mathbf{H}})^{-1}$. The lower bound in (\ref{eq:sinr-lb}) can be used by the eNB to estimate the SINR based on the CQI reported by the intended user.
+\end{itemize}
+
+\paragraph{RI}
+
+By utilizing spatial multiplexing gain provided by multiple antennas, several data streams or layers can be transmitted simultaneously. The number of layers depends on the instantaneous channel and can be determined via the singular value decomposition (SCD) of $\mathbf{H}$ given by
+\begin{equation}
+\mathbf{H}=\mathbf{U} \boldsymbol{\Sigma} \mathbf{V}^\mathsf{H}.
+\end{equation}
+where $\mathbf{U} \in \mathbb{C}^{N_R \times N_R}$ and $\mathbf{V} \in \mathbb{C}^{N_T \times N_T}$ are unitary matrices, and $\boldsymbol{\Sigma}\in \mathbb{C}^{N_R \times N_T}$ is a rectangular matrix with diagonal entries being the sigular values of $\mathbf{H}$ denoted as $\sigma_1, \cdots, \sigma_{N_{\min}}$, where $N_{\min}=\min(N_T,N_R).$
+Given SVD of $\mathbf{H}$, the eigen-decomposition is
+\begin{align}
+\mathbf{H}\mathbf{H}^\mathsf{H}&=\mathbf{U}\boldsymbol{\Sigma} \boldsymbol{\Sigma}^\mathsf{H}\mathbf{U}^\mathsf{H} \nonumber \\
+&= \mathbf{Q} \boldsymbol{\Lambda} \mathbf{Q}^{\mathsf{T}}
+\end{align}
+where $\mathbf{Q}=\mathbf{U}$ and $\boldsymbol{\Lambda}\in \mathbb{C}^{N_R\times N_R}$ is a diagonal matrix with diagonal elements given as
+\begin{equation}
+\lambda_i = \begin{cases} \sigma^2_i, & i\in\{1,2,\cdots,N_{\min}\} \\
+0, & i \in \{N_{\min}+1, \cdots, N_R \}.
+\end{cases}
+\end{equation}
+Since the squared singular values $\{\sigma_i^2\}$ are the eigenvalues $\{\lambda_i\}$ of $\mathbf{H}\mathbf{H}^{\mathsf{H}}$, the total power gain of the MIMO channel can be computed as the squared Frobenius norm of $\mathbf{H}$ given by
+\begin{align}
+\norm{\mathbf{H}}_F^2 &= \text{Tr}(\mathbf{H}\mathbf{H}^\mathsf{H}) = \text{Tr}(\boldsymbol{\Lambda}) \nonumber \\
+&= \sum_{i=1}^{N_{\min}} \lambda_i = \sum_{i=1}^{N_{\min}} \sigma_i^2.
+\end{align}
+In essential, the dominant eigenvalues carry most of the channel power, the UE can determine the number of transmit streams by selecting the number of dominant eigenvalues. In practice, this is often done by employing a threshold to determine the dominant eigenvalues.
+
+%=================================================================
+% CSI
+%=================================================================
+
+\noindent \textbf{C.2 Transmit precoding}
+
+
+\paragraph{Codebook based}
+
+To reduce CSI overhead, Rel. 10 adopts the multigranular feedback structure, or known as dual-stage feedback. The UE reports 4-bit wideband PMI $\mathbf{W}_1$ and 4-bit subband PMI $\mathbf{W}_2$~\cite{R1-105011}. The wideband PMI $\mathbf{W}_1$ tracks the wideband and long-term channel statistics characterized by the channel covariance matrix while the subband PMI
+$\mathbf{W}_2$ tracks the frequency-selective and short-term channel
+variations. Such a dual-stage feedback scheme is attractive because
+it permits more flexibility and accuracy when designing the
+precoding matrix.
+
+%The DFT codebook is good for ULA but not for URA~\cite{Clerckx2008}. The beams corresponding to the DFT codebook have two features. i) The beams are approximately equally distributed on a circle. ii) The HPBW reduces with the number of antenna elements.
+
+\paragraph{Adaptive precoding}
+
+ZF is considered in~\cite{Yoo2007} assuming full CSI available at the transmitter. Let $\hat{\mathbf{H}}=[\hat{\mathbf{h}}_1,\cdots, \hat{\mathbf{H}}_{|\mathcal{S}|}]$, denote the collective channel matrix of all users to be scheduled. The precoding matrix based on ZF beamforming is given by
+\begin{equation}
+\mathbf{W}=\mathbf{F}_{\text{ZF}}\text{diag} (\mathbf{p})^{1/2}
+\end{equation}
+where $\mathbf{F}_{\text{ZF}}=\hat{\mathbf{H}}^\mathbf{H} (\hat{\mathbf{H}} \hat{\mathbf{H}}^\mathsf{H} )^{-1}$, $\mathbf{p}=[p_{1},\cdots, p_{|\mathcal{S}|}$ is the power normalization vector given by
+\begin{equation}
+p_i = \frac{P}{|\mathcal{S}|} \frac{1}{ \norm{ \mathbf{f}_i}^2 }
+\end{equation}
+with $\mathbf{f}_i$ representing the $i$th column of $\mathbf{F}_{\text{ZF}}$.
+
+\paragraph{Kronecker-product based codebook (KPC)}
+
+For 2D array antennas, the vertical and horizonal channel components are coupled but the dependency can be ignored in some cases. The analysis conducted in~\cite{YingVookThomasEtAl2014} shows that when the elevation angular spread is small, the 3D channel correlation matrix is approximately the kronocecker product of the azimuth and elevation correlation. This finding greatly simplifies the design for 3D precoding, which can be obtained by decomposing the precoding matrix into vertical and horizontal dimensions, respectively.
+
+Each codeword is the Kronecker product of two oversampled DFT codewords in both the horizontal and vertical domains~\cite{Xie2013}. However, only rank-1 precoding is considered in~\cite{Xie2013}. The KPC codebook $\mathcal{C}=\{\bm{c}_i\}_{i=1}^{N_v \times N_h -1}$ is given by
+\begin{align}
+\bm{c}_m^{(v)} &= \frac{1}{\sqrt{N_t^{(v)}}} \left[ 1, e^{\frac{ \mathrm{j} 2\pi m }{\beta N_v}}, \cdots, e^{\frac{ \mathrm{j} 2\pi (N_t^{(v)}-1) m }{\beta N_v}} \right]^\mathsf{T} \\
+\bm{c}_n^{(h)} &= \frac{1}{\sqrt{N_t^{(h)}}} \left[ 1, e^{\frac{ \mathrm{j} 2\pi n }{ N_h}}, \cdots, e^{\frac{ \mathrm{j} 2\pi (N_t^{(h)}-1) n }{ N_h }} \right]^\mathsf{T} \\
+\bm{c}_{N_h\cdot m +n} &= \bm{c}_m^{(v)} \otimes \bm{c}_n^{(h)}\label{eq:kronecker-precoding}
+\end{align}
+
+Different from~\cite{Xie2013} using DFT matrix as the basis, the 3D precoding matrix is designed based on SVD decomposition~\cite{GuoFanLiEtAl2015}. Specifically, the vertical and horizontal precoding matrices are obtained separately from the SVD of their corresponding channel matrices.
+
+The Kronecker-based precoding requires the CSI of vertical-domain and horizontal-domain, respectively. Intuitively, the vertical and horizontal CSI can be obtained independently. This approach is considered in~x, which proposed to obtain the vertical and horizontal CSI via a double-set CSI-RS configuration that naturally exploits the Kronecker product. Specifically, the vertical CSI is acquired by selecting one column of the transmit antenna elements to transmit CSI-RS over a predefined set of CSI-RS port (e.g., CSI-RS port 15 and port 17). Likewise, the horizontal CSI is estimated by transmitting CSI-RS over a second set of CSI-RS port (e.g., port 15 and port 16) via one row of the transmit antenna elements. However, estimating CSI by partial transmit antenna elements can hardly be accurate unless the channel is ideally correlated.
+
+\paragraph{Precoding based on vertical beamforming}
+
+With the elevation beam obtained by precoding the CSI-RS assigned to vertical atenna subarray, the UE measures the equivalent horizontal channel and selects the optimal horizontal precoder that maximizes the user throughput~\cite{Song2014}. Denote $\mathbf{W}^{(h)}_k$ the horizontal PMI selected by UE $k$. The received signal at the $k$th UE is
+\begin{align}\label{eq:recv-signal-2d}
+\mathbf{y}_k &= \mathbf{H}_k \mathbf{W}^{(v)}_k \mathbf{W}^{(h)}_k + \text{MUI} + \mathbf{z}_k \nonumber \\
+&= \mathbf{H}_k(\mathbf{I} \otimes \mathbf{W}^{(v)}_k )\mathbf{W}_k^{(h)}+\text{MUI} + \mathbf{z}_k \nonumber \\
+&= \mathbf{H}_k(\mathbf{I} \otimes \mathbf{W}^{(v)}_k )(\mathbf{W}_k^{(h)} \otimes 1)+\text{MUI} + \mathbf{z}_k \nonumber \\
+&= \mathbf{H}_k(\mathbf{W}^{(v)}_k \otimes \mathbf{W}_k^{(h)})+\text{MUI} + \mathbf{z}_k.
+\end{align}
+The first term in (\ref{eq:recv-signal-2d}) reveals the Kronecker-product structure of the precoding matrix. It also suggests the following CSI feedback scheme. For each elevation beam constructed by the vertical precoding matrix $\mathbf{W}^{(v)}$, the UE search for the corresponding horizontal precoding matrix $\mathbf{W}^{(h)}$ and calculate the CQI. The vertical precoding matrix that maximizes the CQI will be chosen as the vertical PMI.
+
+In~\cite{Wang2007}, the vertical-domain channel vector obtained by using any of the vertical antenna subarray is assumed to be identical. This assumption may be valid when the angular spread of the vertical AoA is small. Based on the obtained vertical channel vector, the vertical precoding matrix is derived using the ZF principle. similarly, the horizontal-domina precoding matrix is obtained by applying the ZF algorithm using the equivalent horizontal channel vector given by $\mathbf{h}_k^{\text{eq}}=\mathbf{H}_k^\mathsf{T} \mathbf{w}_k^{(v)}$ where $\mathbf{w}_k^{(v)}$ is the $k$th column of the vertical precoding matrix. Finally, the overall precoding matrix is constructed as (\ref{eq:kronecker-precoding}). The key feature of the above 2D precoding is that the overall channel is transformed using the vertical precoding matrix to an equivalent horizontal channel, which is   used to derive the horizontal precoding matrix. It is proved that this precoding strategy can completely remove the MUI within the cell. However, the proof is developed under the same assumption as that made for designing the 2D precoding matrix, i.e., the vertical channel estimated by any of the vertical antenna subarray is identical. Whether the same conclusion can be drawn for a general channel model remains arguable.
+
+%=================================================================
+% User selection
+%=================================================================
+
+\noindent \textbf{C.3 User selection}
+
+\paragraph{Selection based on orthogonal precoder}
+
+Consider $\text{UE}_1$ whose received signal can be expressed as
+\begin{equation}\label{eq:recv-signal-ue1}
+y_{1} = \mathbf{h}^{\mathsf{H}}_{1} \mathbf{p}_{1} x_{1} + \mathbf{h}^{\mathsf{H}}_{1} \mathbf{p}_{2} x_{2} + z_{1}
+\end{equation}
+where $\bm{h}_{1}^{\mathsf{H}}=[h_{11}^{\mathsf{H}}~h_{21}^{\mathsf{H}}]$ and $\mathbf{p}_k \in \mathbb{C}^{N_T}$. The UE measures its channel $\mathbf{h}_1$ and computes the precoder in the matched filter principle as
+\begin{equation}
+\mathbf{P}_{\text{MF}} = \frac{h_{11}^*}{|h_{11}|^2} %
+\begin{bmatrix} h_{11} \\ h_{21} \end{bmatrix} = \begin{bmatrix} 1 \\ \frac{ h_{11}^* h_{21} }{ |h_{11}|^2 } \end{bmatrix}
+\end{equation}
+where the first entry in the precoder is normalized to unity and the second entry indicates the phase between two channel coefficients. To maximize the received signal power, i.e., $|\mathbf{h}_{11}^{\mathsf{H}} \mathbf{p}_1|^2=|h_{11}^{\mathsf{H}} p_{11} + h_{21}^{\mathsf{H}} p_{21}|^2$, the precoder should be chosen to align $h_{21}^{\mathsf{H}}$ with $h_{11}^{\mathsf{H}}$. For $N=2$, the LTE precoder is $\mathbf{p}_1 = [1 ~q]^{\mathsf{T}}, q \in \{ \pm 1, \pm j \}$. Since this precoder allows rotation of $h_{21}^{\mathsf{H}}$ by limited degrees, i.e., $0^{\circ}$, $\pm 90^{\circ}$, or $180^{\circ}$, the UE should choose the one of the four LTE precoder that has the minimal distance with $\mathbf{P}_{\text{MF}}$ and feeds back the precoder index to the eNB.
+
+To maximize the received signal for user 1, it remains necessary to minimize the interference, i.e., $\bm{h}_1^{\mathsf{H}} \mathbf{p}_2 x_2$. This can be achieved by choosing the precoder $\mathbf{p}_2$ to be $180^\circ$ out of phase from $\mathbf{p}_1$. Consequently, the received signal in (\ref{eq:recv-signal-ue1}) is
+\begin{equation}
+y_{1} = \bm{h}^{\mathsf{H}}_{1} \begin{bmatrix} 1 \\ q \end{bmatrix} x_{1} + \bm{h}^{\mathsf{H}}_{1} \begin{bmatrix} 1 \\ -q \end{bmatrix} x_{2} + z_{1}.
+\end{equation}
+The joint precoding and scheduling policy can thus be stated as follows. Firstly, each UE selects the precoder that maximizes their own signal strength. Based on the selected precoders, the eNB schedules a UE pair with out of phase precoder. As a result, the precoding matrix for a scheduled UE pair is $\mathbf{P}=1/\sqrt{4}\begin{bmatrix} 1 & 1\\ q & -q \end{bmatrix}$, which ensures maximization of the desired signal strength for each UE. Meanwhile, election of the UE pairs with out of phase precoder ensures minimization of their mutual interference.
+
+
+\paragraph{Greedy selection}
+
+Let $\mathcal{S}$ denote the set of users to be scheduled and $R(\mathcal{S})$ represent the sum rate of the user set $\mathcal{S}$. The greed selection iteratively picks a user from the unscheduled users whose rank-1 transmission has the highest rate. If co-scheduling this user yields an improved sum rate, this user is added into $\mathcal{S}$ and the procedure repeats until no more users are left. Algorithm~\ref{alg:greedy-selection} illustrates the greedy selection algorithm.
+
+\begin{spacing}{0.8}
+\begin{algorithm}
+\caption{Greedy user selection algorithm.} \label{alg:greedy-selection}
+\algnewcommand\algorithmicto{\textbf{to}}
+\algrenewtext{For}[3]%
+{\algorithmicfor\ #1 $\gets$ #2 \algorithmicto\ #3 \algorithmicdo}
+  \begin{algorithmic}[2]
+  \Require
+    \State  $\mathcal{S}=\emptyset$;
+    \State  $\hat{\mathbf{H}}=[\hat{\mathbf{h}}_1,\cdots, \hat{\mathbf{h}}_K]$; \Comment{UE's CDIs}
+    \State $M$;  \Comment{Number of UEs to be scheduled}
+%
+ \While{$|\mathcal{S}| \leq M$}
+   \State Find $k^*=\arg \max_{k \notin \mathcal{S}} R(\mathcal{S} \cap \{k\}$;
+   \If{$R(\mathcal{S} \cap \{k^*\}) > R(\mathcal{S})$}
+        \State $\mathcal{S}=\mathcal{S}\cap \{k^*\}$;
+   \EndIf
+ \EndWhile
+  \end{algorithmic}
+\end{algorithm}
+\end{spacing}
+
+The greedy selection algorithm is widely considered because it is rather simple and the selection decision is independent from the detailed configurations of the physical layer, such as antenna numbers and precoder structure. However, the greedy selection replies on an accurate estimate of sum rate, which is very difficult considering the limited feedback available in LTE systems.
+
+\paragraph{Correlation-based}
+
+Finding the optimal user set that maximizes the sum rate requires an exhaustive search. A semi-orthogonal user selection (SUS) is proposed in~\cite{Yoo2006}, which iteratively adds a user as long as its correlation with previously selected users is under a predefined threshold. Let $\mathcal{A}_0$ denote the initial user set, i.e., $\mathcal{A}_0=\{1,\cdots,K\}$. To select $M$ out of $K$ users, the procedure of SUS can be described as follows.
+
+\begin{enumerate}
+\item In $\mathcal{A}_0$, the user with the highest SINR is first selected as
+\begin{equation}
+u_1 = \arg~\max_{k\in \mathcal{A}_0} \text{SINR}_k.
+\end{equation}
+\item The $(i+1)$th user for $i \geq 1$ is selected from the set
+\begin{equation}
+\mathcal{A}_i=\{k | 1 \leq k \leq K, |\hat{\mathbf{H}}_k^{\mathsf{H}} \hat{\mathbf{H}}_{u_j}| \leq \epsilon \}
+\end{equation}
+as
+\begin{equation}
+u_{i+1} = \arg~\max_{k\in \mathcal{A}_i} \text{SINR}_k.
+\end{equation}
+\item $\mathcal{S}=\mathcal{S} \cap u_{i+1}$.
+\end{enumerate}
+In this way, the users in $\mathcal{S}$ have high channel qualities and are mutually semi-orthogonal in terms of their quantized channel directions $\hat{\mathcal{H}}_k$.
+
+\paragraph{Vector distance-based}
+
+Based on the idea of codebook clustering,~\cite{Wang2012} proposed a dynamic scheduling scheme. Based on the reported RIs from all UEs, the scheduler divides the UEs in two groups. Those UEs with RI no less than 3 is classified as the SU-MIMO group and those with RI less than 3 belongs to the MU-MIMO group. Then the scheduler will determine either to operate with the SU-MIMO mode or the MU-MIMO mode depending on which mode has the higher sum rate. For the SU-MIMO mode, the UE with the highest CQI in the SU-MIMO group is considered and a subset of UEs that have the highest sum rate will be selected.   For the MU-MIMO mode, first select the UE with the highest CQI. Then select the next UE such that the total distance between its preferred PMI and each of the PMIs of the selected UEs is the largest. Whenever a new UE is selected, remove all other UEs whose preferred PMI coincides with the newly selected UE. The above procedure repeats until the total rank equals the number of transmit antennas or no more UEs are left for scheduling.
+
+Although this scheduling scheme can work without reporting to any change with the LTE specification, its performance in the MU-MIMO mode may be poor if the number of UEs selected is large because the composite MIMO channel of these co-scheduled UEs might have a large condition number.
+
+\paragraph{Best-companion pairing}
+
+In best-companion pairing (BCP), each UE not only feeds back the preferred PMI that maximizes the SNR but also one or several PMIs with least interference~\cite{bestcompanion_1}. Let $\mathbf{F}_k$ denote the preferred PMI of UE $k$ and $\mathbf{F}_l$ the least interfering PMI. The PMI pair ($\mathbf{F}_k$, $\mathbf{F}_l$, selected by UE $k$ is determined as
+\begin{align}
+\mathbf{F}_k &= \arg~\max_{\mathbf{F}_i \in \mathcal{C}} \norm{\mathbf{H}_k^\mathsf{H} \mathbf{F}_i}^2 \nonumber \\
+\mathbf{F}_l &= \arg~\min_{\mathbf{F}_j \in \mathcal{C}} \norm{\mathbf{H}_k^\mathsf{H} \mathbf{F}_j}^2.
+\end{align}
+With the information of $$\mathbf{F}_l$$ recommends the eNB to schedule another UE whose preferred PMI is $\mathbf{F}_l$. One can see that this scheme requires PMI
+
+A simulation study on the above three schemes is conducted in~\cite{Du2010}. In terms of throughput performance, BCP performs the best at the highest feedback overhead. BPC trades reduced feedback overhead at the cost of certain throughput loss. However,
+
+
+To further reduce feedback overhead, the codebook is clustered and the UE feeds back the cluster index that includes the least interference PMI or those orthogonal to the preferred PMI. This method is known as best-companion clustering (BCC)~\cite{bestcompanion_2}.
+
+%=================================================================
+% Part II: NR-JT 
+%=================================================================
+
+
+\noindent \textbf{C.4 Joint Transmission in NR}
+
+
+JT is expected to be an important solution to improve link stability and data rate, particularly for in the application of above 6 GHz. The measurement cmpaign conducted in the downtown of New York City~\cite{Jr.RappaportGhosh2017} confirm the benfit of CoMP to NR. It is shown that the coverage probability is improved from $55.6\%$ to $100\%$ when the number of serving eNBs is increased from one to five. JT is one of the CoMP technologies defined in Rel. 11 as transmission mode 10 (TM 10)~\cite{TR36.819}.
+
+To perform CoMP, several geographically separately points (namely, the eNB or RRH) participate in data transmission to a UE in a time-frequency resource. This set of points is referred to as the CoMP cooperating set, and a subset of the CoMP cooperating set will be selected to transmit data to a UE. In addition, a CoMP measurement set is a set of points whose CSI is measured and reported and thus this set may be identical to the CoMP cooperating set.
+
+
+To select the transmission points from the CoMP cooperating set, uplink CSI such as SRS, DM-RS, and PUCCH may be used. It is also possible for the UE to select the transmission points basd on downlink measurement, e.g., RSRP, RSRQ, CRS or CSI-RS. Depending on the level of coordination, determining the cooperating set can be done at a part of RRC or scheduling procedure but the exact selection criterion for the transmission points is subject to practical implementation~\cite[5.2.3]{TR36.819}.
+
+To implement JT at the downlink, 3GPP has agreed the following methods~\cite{RAN189Meeting}
+\begin{itemize}
+\item \textbf{Case 1}: \underline{Single NR-PDCCH} schedules single NR-PDSCH where separate layers are transmitted from srparte TRPs. This is the case of non-coherent JT and can be supported by the ageement that ``DRMS port groups belonging to one CW can have different QCL assumptions''.
+\item \textbf{Case 2}: \underline{Multiple NR-PDCCHs} each scheduling a respective NR-PDSCH where each NR-PDSCH is transmitted from a separate TRP.
+\item \textbf{Case 3}: \underline{Single NR-PDCCH} schedules single NR-PDSCH where each layer is transmitted from all TRPs jointly. This is the case of coherent JT.
+\end{itemize}
+
+Based on the above agreement, several open issues are open and will be discussed in the upcoming standard meeting. 
+
+
+
+%=================================================================
+% Research Method
+%=================================================================
+
+\noindent \underline{(二)	研究方法、進行步驟及執行進度。} 
+
+我們將針對下行傳輸進行研究，
+
+\noindent \textbf{A. 研究方法}
+
+\noindent \textbf{A.1 User Selection Strategy for MU-MIMO}
+
+在MU-MIMO傳輸模式下，基地台需適當的選擇數個用戶，以最大化整體傳輸率，此問題有兩大挑戰，(1) 能夠最大化整體傳輸率的用戶集合必定滿足兩個條件：接受訊號最大與用戶間干擾最小，接收訊號品質最大化可透過用戶自行量測的通道資訊，選擇最佳的預編碼後告知基地台，而基地台根據用戶回傳的資訊，若數個用戶預編碼後的通道彼此近乎正交，則選擇這群用戶進行MU-MIMO傳輸可獲得最大傳輸率，我們在\texttt{C.3}小節說明過這種方法。然而當用戶數高於兩個以上，選擇\underline{彼此正交}的用戶變得極為困難，(2)用戶回傳的通道資訊受到量化及回傳延遲的影響，進一步降低選擇的用戶集合的精確度。
+
+我們提出的方法為基於Rel. 10的dual-stage feedback，基地台根據PMI $\mathbf{W}_1$獲得用戶的通道空間資訊，將用戶分組，同一組的用戶根據其整體通道的條件，決定可支援的訊號層次數，基地台再根據各組用戶回報的PMI $\mathbf{W}_2$，設計適應式的預編碼矩陣，消除用戶間干擾。這樣的作法有以下好處：
+\begin{itemize}
+\item 將用戶分組後，用戶間較大的干擾來自同組用戶，這些同組用戶的數目遠小於用戶總數，較容易消除。
+\item 各用戶僅須估計並回報經由預編碼矩陣$\mathbf{W}_1$後的等效通道，相較於未預編碼的原始通道，等效通道有較小的維度，降低了通道回報所需的頻寬，同時，等效通道只受通道的長期變化所影響，可降低通道回報的頻率。
+\end{itemize}
+
+以下說明我們認為適合5G系統可採用的MU-MIMO用戶選擇機制，此方法對分時多工(Time-Division Duplexing, TDD)與分頻多工 (Frequency-Division Duplexing, FDD)皆適用, 對FDD系統更有降低CSI overhead的優點。為方便說明，我們先考慮一個cell中有$K$個單天線的用戶裝置UE，eNB具有$N_T$個傳送天線，由於英文專有名詞甚多，未免段落中夾雜過多的中英文，以下我們以英文做說明。
+
+Recall the received signal of $K$ users at the downlink as given by (\ref{eq:rec-sig-mumimo}). Following the dual-stage feedback, the precoding matrix $\mathbf{P}$ can be obtained by concatenating two precoders $\mathbf{W}_1$ and $\mathbf{W}_2$. In particular, the precoder $W_1 \in \mathbb{C}^{N_T \times b}$ is used to (i) reduce the channel dimension from $K\times N_T$ to $K\times b$ where $b \leq N_T$ is a design parameter, and (ii) mitigate the mutual interference among users in different groups. We will explain the user grouping scheme later. On the other hand, the precoding matrix $\mathbf{W}_2 \in \mathbb{C}^{b\times S}$ is used to mitigate the inter-user interference within the same group. Here $S$ is the total number of layers to be supported and it is bounded by $S \leq \min\{ N_T, K \}$.
+
+We shall first discuss how the precoding matrix $\mathbf{W}_1$ can be designed. By rewriting the received signal model in (\ref{eq:rec-sig-mumimo}), we have
+\begin{align}
+\mathbf{y} &= \mathbf{H}^\mathsf{H}(\mathbf{W}_1 \mathbf{W}_2)\mathbf{d} + \mathbf{z} \nonumber \\
+&= (\mathbf{W}_1^\mathbf{H} \mathbf{H})^\mathsf{H} \mathbf{W}_2\mathbf{d} + \mathbf{z} = \underline{\mathbf{H}}^\mathsf{H} \mathbf{W}_2 + \mathbf{z}.
+\end{align}
+For convenience, let us call the channel precoded by $\mathbf{W}_1$ as the effective channel $\underline{\mathbf{H}}=\mathbf{W}_1^\mathsf{H} \mathbf{H}$. For each user, it estimates and feeds back the effective channel precoded by $\mathbf{W}_1$. Since $\mathbf{W}_1$ tracks the long-term channel characteristics (see Section \texttt{C.2}), the feedback frequency is much slower than the direct feedback of $\mathbf{H}$. Besides, the effective channel has a lower dimension than $\mathbf{H}$.
+
+The long-term channel characteristis can be captured in various forms, such as channel covariance matrix, angle of arrival (AoA)/angle of departure (AoD), and so on. A natrual and convincing choice for implementing MU-MIMO is the covariance matrix of the MIMO channel, which captures the spatial information of the channel and depends on the propagation environment with short-term channel variations being averaged. The channel covariance matrix is defined as $\mathbf{R}=\mathbb{E}[\mathbf{H}^\mathsf{H}\mathbf{H}]$ and its SVD is given by
+\begin{equation}
+\mathbf{R}= \mathbf{U} \boldsymbol{\Delta} \mathbf{U}^\mathsf{H}.
+\end{equation} 
+The use of channel covariance matrix for MU-MIMO has been discussed in LTE~\cite{R1-100190,R1-094920}. For the case of massive MIMO, several methods for estimating the covariance matrix have also been proposed lately~\cite{ 
+
+
+\noindent \textbf{A.1 CSI acquisition}
+
+%\paragraph{Channel direction indicator (CDI)}
+% The channel coefficient, namely, $\mathbf{h}_k$, is essential to the determination of CSI, and it is called the channel direction indicator (CDI) in LTE terminology. Given the codebook $\mathcal{C}=\{\bm{c}_1,\cdots,\bm{c}_N\}$ with size
+%$N=2^B$, the spatial direction of UE $k$'s channel, referred to as
+%channel direction information (CDI), can be determined according to the
+%minimum distance criterion. Denote the normalized channel direction
+%indicator (CDI) of UE $k$ as
+%\begin{equation}\label{eq:cdi}
+%\tilde{\mathbf{h}}_k=\mathbf{h}_k/\norm{\mathbf{h}_k}.
+%\end{equation}
+%Then the quantized version of $\tilde{\mathbf{h}}_k$ denoted as
+%$\hat{\mathbf{h}}_k$ is chosen from the codebook $\mathcal{C}$ as
+%\begin{equation}\label{eq:quantized-cdi}
+%\hat{\mathbf{h}}_k = \bm{c}_n,~n=\arg \; \max_{1 \leq j \leq N} |\tilde{\mathbf{h}}_k^\mathsf{H} \bm{c}_j^*|
+%\end{equation}
+%As can be seen, the CDI is obtained by quantizing the normalized channel using $B$ quantization bits.
+
+
+%=================================================================
+% Part I: Beam Management - Start of Art
+%=================================================================
+
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{antenna-space-mimo}
+%        \caption{Antenna-space MIMO.}\label{fig:antenna-space-mimo}
+%    \end{subfigure}
+    %
+%    \quad
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{beam-space-mimo}
+%        \caption{Beam-space MIMO.}\label{fig:beam-space-mimo}
+%    \end{subfigure}
+%    %
+%    \quad
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{antenna-beam-view}
+%        \caption{Relation between antenna-space and beam-space MIMO.}\label{fig:beam-spacec-mimo}
+%    \end{subfigure}
+%    \caption{Antenna-domain vs. beam-domain MIMO channel representation.}\label{fig:MIMO-channel}
+%\end{figure}
+
+\begin{itemize}
+\item Orthogonal CSI-RS: Assign each transmit antenna element with one CSI-RS port. This allows the channel response being measured for all the transmit antenna elements. However, the required number of CSI-RS port would grow with the number of transmit antenna elements and thus becomes resource consuming for the system with large antenna arrays.
+\item Separate CSI-RS: Employ two sets of CSI-RS ports with one set dedicated to one of the vertical antenna element subarrays and the other set assigned to one of the horizontal antenna element subarrays. This allows the horizontal CSI and vertical CSI to be measured independently by the UE with the least resource consumption. However, the CSI measured by partial antenna elements may not be as accurate as that measured by using all antenna elements.
+\item Elevation beam-specific RS: Assign each vertical antenna subarray with one CRI-RS that is different across different vertical antenna subarrays. The training symbol sent by one vertical antenna subarray is precoded to construct one elevation beam. Accordingly, the UE can measures the equivalent horizontal CSI, namely, $\tilde{\mathbf{H}}^{(h)} = \mathbf{H} \mathbf{W}^{(v)}$,  where each column in $\tilde{\mathbf{H}}^{(h)}$ corresponds to one elevation beam or equivalently, a virtual antenna seen by the UE. This scheme reuses the existing CSI-RS and thus is transparent to UEs about the use of FD-MIMO. Table~\ref{tab:fd-mimo-csi} shows the number of required CSI-RS ports for the three schemes where $Q$ is the available number of vertical precoders, which is generally less than the number of vertical antenna elements.
+\end{itemize}
+
+\begin{table}[ht]
+\caption{Required number of CSI-RS} \label{tab:fd-mimo-csi} \centering
+  \begin{tabular}{|c|c|c|}
+  \hline
+Orthogonal & Separate & Vertical-Precoded \\
+\hline
+$N_T^{(h)} N_T^{(v)}$ & $N_T^{(h)}+N_T^{(v)} - 1$ & $QN_T^{(h)}$ \\
+  \hline
+  \end{tabular}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+%=================================================================
+% Part I: Beam Management - Problem Statement 
+%=================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+These two alternative approaches are different in many aspects.
+
+
+
+\noindent \textbf{B. NR-JT}
+
+Our mission is to address these issues as outlined in the following with the aid of SLS. To this end, we will implement all the three alternatives for NR-JT and evaluate their feasibility and performance.
+
+
+\paragraph{Maximum number of layers per PDSCH}
+
+Different considerations about the number of layers per PDSCH has been proposed. \cite{R1-1710523} suggests to support at most four MIMO layers per PDSCH. \cite{R1-1710180} suggests to define the maximum supported number of layers as a UE-specific parameter. With this parameter, the number of supported layers per PDSCH can be determined accordingly. \cite{R1-1710141} suggest to support up to eight layers per PDSCH based on the RAN1 agreement of supporting at most eight DM-RS ports for SU-MIMO. \cite{R1-1710451} also suggest the maximum number of layers per PDSCH to be eight in order to reduce the UE's decoding complexity.
+
+
+\paragraph{Maximum number of codewords}
+
+The maximum number of supported codewords per link is relevant to the implementation complexity, control feedback overhead, UE complexity. \cite{R1-1710055} suggest to support up to 2 codewords for single PUSCH/PDSCH.
+
+\paragraph{CSI feedback}
+
+For JT, CSI in correspondence to different TRPs should be required. For NR, a higher cell density is expected that would complicates interference measurement. Flexible CSI framework for NR is important to support a large number of channel/interference combination. Some countermeasures are currently under discussions. e.g, the aperiodic CSI-RS framework of Rel. 14 can be extended to NR to support CoMP. Also, it may be beneficial to aggregate multiple CSI-RS in single PDCCH case~\cite{R1-1710180}. For multiple PDCCHs case, multiple CSI processes with dependency can be used for CSI calculation.
+
+\paragraph{Interference measurement}
+
+For JT, CSI estimation is crucial to the precoder selection and link adaptation. Consider the scenario where each TRP in a CoMP transmission set performs adaptive precoding independently to transmit to a UE. If different codewords are transmitted, the inter-TRP interference must be considered when calculating the CSI. In other words, a method is required to obtain the CSI with inter-TRP interference taken into account. However, different resource allocation strategy leads to different combintion of available channel and interference hypothesis. Thus it is difficult to know the exact interference on each resource. Depending on whether the resources used by each TRP in the CoMP transmission set are overlapped or not, it is expected different interference scenarios, or called interference hypothesis, may arise as summarized in Table~\ref{tab:interf-hypo}~\cite{R1-1710451}.
+
+The interference hypothesis in Table~\ref{tab:interf-hypo} indicates a symmetric relationship between channel measurement and interference measurement for the overlapped RA scenario. This inter-relationship can be used to derive CSI under different RA.
+
+
+For NR, beam-based transmissions will be adopted and hence multiple TRPs might introduce serious mutual interference. For example, if the beam transmission order within each cell is fixed, two or more neighboring cells might collide in their beam-based RS that is transmitted periodically. To alleviate the problem, interference randomization may be used~\cite{R1-1710180}.
+
+\begin{table}[ht]
+\caption{Interference hypothesis~\cite{R1-1710451}.} \label{tab:interf-hypo} \centering
+  \begin{tabular}{|c|c|c|c|c|}
+  \hline
+   & \multicolumn{2}{c|}{Overlapped RA} & \multicolumn{2}{c|}{Non-overlapped RA} \\
+   \hline
+   & Hypothesis 1 & Hypothesis 2 & Hypothesis 3 & Hypothesis 4 \\
+  \hline
+  \multirow{2}{*}{\vtop{\hbox{\strut Channel}\hbox{\strut measurement}} } & \multirow{2}{*}{From TRP1} & \multirow{2}{*}{From TRP2} & \multirow{2}{*}{From TRP1} & \multirow{2}{*}{From TRP2} \\
+  & & & & \\
+ \hline
+  \multirow{2}{*}{\vtop{\hbox{\strut Interference}\hbox{\strut measurement}} } & \multirow{2}{*}{From TRP2 and $\bar{\mathcal{T}}$ } & \multirow{2}{*}{From TRP2 and $\bar{\mathcal{T}}$} & \multicolumn{2}{c|}{  \multirow{2}{*}{\vtop{\hbox{\strut From $\bar{\mathcal{T}}$ and}\hbox{\strut non-overlapped RA}} } } \\
+  & & & & \\
+ \hline
+  \end{tabular}
+\end{table}
+
+Interference among multiple TRPs may be severe when each TRP performs scheduling independently. For NR, the problem may arise when beam-based reference signal is sent periodically in some fixed patterns. In~\cite{R1-1710180}, beam randomization is proposed to alleviate interference among TRPs. For periodic CSI-RS, the transmission beam order can be randomized.
+
+\noindent \textbf{B.2 Open Issues}
+
+Based on the survey of current standardization progress on NR-JT, we identify important open issues and will address these issues .
+
+\paragraph{Evaluation on the maximum number of layers per PDSCH}
+
+For multiple NR-PDSCH reception in NR, namely \textbf{case 2}, the number of layers per PDSCH should be maximized to maintain high spectral efficiency while taking into the UE's capability and complexity in processing multiple layers. While it is commonly agreed to support eight layers per PDSCH~\cite{R1-1710141,R1-1710451}, solid evidences are necessary to balance the tradeoff between the maximization of system-wide multiplexing gain and UE's complexity. Another related question is what to do when the upper limit of supported layers is violated due to independent scheduling among different TRPs. A countermeasure is to drop some layers at the UE side~\cite{R1-1709924,R1-1710523}. As a reactive approach, layer dropping at the UE implies the resource and transmit power for transmitted the dropped layers are wasted. Beside, the transmission for those dropped layers introduce unnecessary interference to other users.
+
+We propose to the following approach to support the reception of multiple NR-PDCCHs. The UE estimates the number of layers per PDSCH for each TRP using the normal procedure for evaluating RI. Suppose the estimated number of layers for the PDSCH associated with the $i$th TRP is $L_i$ and there are $N$ TRPs in the CoMP transmitting set. The reported RI from the UE to the $i$th TRP is chosen as $\min(L_i, L_{\max}/N)$, where $L_{\max}$ is the maximum number of layers that the UE can support. Since the reported RI is upper bounded by the result after evenly distributed the maximum number of supported layers to each PDSCH, NR-JT with case 2 will always satisfy the layer constraint of the UE but also opportunistically utilizes the maximum number of layers whenever possible.
+
+\paragraph{Beam grouping}
+
+Several beams that share similar channel properties, e.g., AoA  and AoD, QCL (quasi-co-location)
+
+\begin{figure}[t]
+        \centering
+        \includegraphics[width=0.45\columnwidth]{beam-group}
+        \caption{Illustration of beam grouping~\cite{R1-1610891}.}\label{fig:beam-group}
+\end{figure}
+
+\paragraph{Selection of coordinated TRPs}
+
+Since UE would receiver multiple PDCCH/PDSCH from different TRPs simultaneously, selection of coordinated TRPs is important. i) TRPs with significant difference of RSRP should be avoided to overwhelm the weak signal.
+
+\paragraph{Layer dropping}
+
+In case the number of scheduled MIMO layers across all scheduled PDSCHs exceeds UE's layer-decoding capability, UE is allowed to drop MIMO layers~\cite{R1-1710523}. Since dropping layers would significantly lower system performance, the criterion of dropping layers needs to be carefully considered.
+
+ \paragraph{Interference management}
+
+One of the proposals under discussions for reducing inter-beam interference in NC-JT is beam randomization~\cite{R1-1710180}. Despite its simplicity, beam randomization can not avoid beam collision and it becomes less effective when the number of beams is small. Beam randomization only degrades the accuracy of CSI calculation because not all the TRPs outside the coordination group are interferers as in the case without beam randomization. It is expected that beam randomization may be useful in some scenarios that need to be identified.
+
+\paragraph{Selection on Transmission Points}
+
+Given the CoMP cooperating set, it is crucial to select the transmission points for transmitting data to a UE. Essentially, two selection methods have been studied in the literature.
+\begin{itemize}
+\item Network-centric method: CoMP cooperating set is predefined, either by the network operator during the network planning stage or by the higher layer as a part of RRC procedure. The UE follows the normal attach procedure to find its serving eNB, which notifies other eNBs in the same CoMP cooperating set to perform JT.
+\item User-centric method: CoMP cooperating set is determined by the UE, which selects the best few eNBs that provide the highest RSRP.
+\end{itemize}
+
+Comparing these two approaches, they differ in many ways as summarized in Table~\ref{tab:comparison-comp}. Firstly, \textbf{load balancing} can be easily achieved by the network-centric approach because the network fully controls how the CoMP cooperating set is formed. Instead, user-centric approach may lead to very unbalanced load because some eNBs might be simultaneously selected by several UEs as the preferred transmission points. In terms of \textbf{signaling overhead}, network-centric approach saves the control signaling between a UE and several potential transmission points that is required in user-centric approach. Finally, \textbf{inter-cell interference} can be completed mitigated by network-centric approach because it turns the nearby interferers to signal sources. While user-centric approach can also use neighboring eNBs that potentially interfere a UE as the transmission points, different CoMP cooperating sets might be overlapped that introduce serious interference, as shown in Fig.~\ref{fig:overlapped-comp}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=1\columnwidth]{user-centric-overlap.eps}
+        \caption{Overlapped CoMP cooperating sets in user-centric approach: the solid line indicates the signal path while the dashed line indicates the interference path.}\label{fig:overlapped-comp}
+    \end{subfigure}
+    %
+    \quad
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=1\columnwidth]{compa-r.eps}
+        \caption{Comparions of per-user rate.}\label{fig:rate-comparison-comp}
+    \end{subfigure}
+    \caption{Illustration of different CoMP schemes.}\label{fig:comp-comparison}
+\end{figure}
+
+The performance of the above two CoMP schemes are compared via simulations in terms of the achievable rate per user as a function of the number of transmission points. The result without CoMP is also shown as the benchmark. As shown in Fig.~\ref{fig:rate-comparison-comp}, the per-user rate under the network-centric scheme increases with the number of transmission points and it always outperform the case without CoMP. On the contrary, the user-centric scheme performs worst as the number of transmission points increases because of the higher chance of overlapped CoMP cooperating sets that introduce serious inter-cell interference.
+
+\begin{table}[ht]
+\caption{Comparisons of point selection schemes in CoMP.} \label{tab:comparison-comp} \centering
+  \begin{tabular}{|c|c|c|}
+  \hline
+ & Network-centric & User-centric \\
+\hline
+\multirow{2}{*}{ \vtop{\hbox{\strut Load}\hbox{\strut balancing}} } & \multirow{2}{*}{Yes} & \multirow{2}{*}{ No } \\
+ & & \\
+\hline
+\multirow{2}{*}{ \vtop{\hbox{\strut Signaling}\hbox{\strut overhead}} } & \multirow{2}{*}{Lower} & \multirow{2}{*}{ Higher } \\
+ & & \\
+ \hline
+\multirow{2}{*}{ \vtop{\hbox{\strut Inter-cell}\hbox{\strut interference}} } & \multirow{2}{*}{Low} & \multirow{2}{*}{ High } \\
+ & & \\
+ \hline
+  \end{tabular}
+\end{table}
+
+Our preliminary result reveals very different behavior of the network-centric and user-centric CoMP in response of the number of transmission points. The result is obtained under simple propagation model and the use of omnidirectional antennas. More realistic system settings such as sectorized cells, 2D antenna array, NR channel model should be considered. In addition, the selection of transmission points is based on RSRP in the current study. Other selection mechanisms based on different CSI deserve further investigation. Finally, our preliminary study considers CoMP with MU-MIMO where perfect CSI feedback is assumed to perform transmit beamforming . In practice, only limited feedback is available and thus the current result might be too optimistic. With limited feedback, spatial multiplexing gain of MU-MIMO becomes restricted in comparison with rank-1 transmission. It is worth to analyze in which conditions CoMP with MU-MIMO should be carried out.
+
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{beamspace_aoa_N-32_snrdB-5}
+%        \caption{SNR=5 dB.}\label{fig:beamspace_N-32_snrdB-5}
+%    \end{subfigure}
+%    \quad
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{beamspace_aoa_N-32_snrdB-20}
+%        \caption{SNR=20 dB.}\label{fig:beamspace_N-32_snrdB-20}
+%    \end{subfigure}
+%    \caption{Beamspace channel with an 32-element ULA under different SNRs. The physical DOA of the LOS component is $45^
+%    \circ$.}\label{fig:beamspace_snr}
+%\end{figure}
+ 
+
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{0.3\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{blocked_blind}
+%        \caption{Tracking result using the algorithm in~\cite{Gao2017}.}\label{fig:blocked_orig}
+%    \end{subfigure}
+%    \quad
+%    \begin{subfigure}[t]{0.3\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{blocked_recovery}
+%        \caption{Resum tracking after LOS is recovered.}\label{fig:blocked-recovery}
+%    \end{subfigure}
+%    \quad%
+%    \begin{subfigure}[t]{0.3\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{tracking-snr}
+%        \caption{Tracking result as the user moves away.}\label{fig:tracking-snr}
+%    \end{subfigure}
+%    \caption{Performance of geometry-based beam tracking: LOS blocked at the 18th slot and recovered at the 51th slot. The solid line indicates the real DOA and the triangle symbols are the estimated DOAs from the tracking algorithm in~\cite{Gao2017}.}\label{fig:geometry-beam-tracking}
+%\end{figure}
+
+
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{sdr-testbed}
+%%        \caption{BS and UE configuration.}\label{fig:sdr-config}
+%    \end{subfigure}
+%    %
+%    \quad
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{experiment-layout}
+%        \caption{System layout in the experiment.}\label{fig:experiment-layout}
+%    \end{subfigure}
+%    \caption{The SDR-based MU-MIMO prototype in PI's group.}\label{fig:testbed}
+%\end{figure}
+
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{case1-2345}
+%        \caption{Case 1: MS 2, 3, 4, 5 are active.}\label{fig:measurement-case 1}
+%    \end{subfigure}
+%    %
+%    \quad
+%    \begin{subfigure}[t]{0.45\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{case2-1245}
+%        \caption{Case 2: MS 1, 2, 4, 5 are active.}\label{fig:measurement-case 2}
+%    \end{subfigure}
+%    \caption{Measurement results with two different sets of active MSs.}\label{fig:measure-result}
+%\end{figure}
+
+
+
+%\begin{spacing}{0.8}
+%\begin{algorithm}
+%\caption{Inter- and intra-beam power allocation} \label{alg:pwr-alloc}
+%\algnewcommand\algorithmicto{\textbf{to}}
+%\algrenewtext{For}[3]%
+%{\algorithmicfor\ #1 $\gets$ #2 \algorithmicto\ #3 \algorithmicdo}
+%  \begin{algorithmic}[2]
+%  \Require
+%    \State  $\mathbf{h}_{m,n}$;\Comment{User channel}
+%    \State  $P$;\Comment{Total power constraint}
+%    \State  $R^{\text{OMA}}_{m,n}$;\Comment{OMA rate of each user}
+%    \State $K_n$;\Comment{Number of users per beam}
+%    \Ensure
+%      $P_{m,n}~\forall m,n$;
+%%
+%%
+%    \For{$n$}{1}{$N_{\text{RF}}$}
+%       \State $P_B^{(n)} \gets \tfrac{ R_n^{\text{OMA}} }{ R^{\text{OMA}} }P$;\Comment{Inter-beam power allocation}
+%       \For{$m$}{$K_n$}{2}
+%            \State Compute $\gamma_{m,n} = 2^{R_{m,n}^{\text{OMA}}}-1$;\Comment{Target SINR}
+%            \State Compute $P_{m,n} = \frac{ \gamma (|\mathbf{h}_{m,n}|^2 +\dfrac{1}{\sigma^2}) }{ |\mathbf{h}_{m,n}|^2 (1+ \gamma) }P_B^{(n)}$;\Comment{Intra-beam power allocation}
+%            \State $P_B^{(n)}=P_B^{(n)}-P_{m,n}$;\Comment{Update remaining power per beam}
+%     \EndFor
+%     \State $P_{1,n}=P_B^{(n)}$;\Comment{Allocate remaining power to strongest user}
+%    \EndFor
+%  \end{algorithmic}
+%\end{algorithm}
+%\end{spacing}
+
+
+%\begin{figure}[!h]
+%\centering
+%\includegraphics[width=0.45\columnwidth]{screen-blocker.eps}
+%\caption{The DKED model: 3D projection of screen blocker.} \label{fig:sreen-blocker}
+%\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+%\begin{figure}[!h]
+%\centering
+%\includegraphics[width=0.45\columnwidth]{PAS_frequency28_GHz_Outdoor_100_CIRs.eps}
+%\caption{Simulated PAS using the NYU mmWave channel simulator in comparison with the truncated Laplacian model.} \label{fig:PAS}
+%\end{figure}
+
+ 
+%\begin{figure}[!ht]
+%\centering
+%\includegraphics[width=0.45\columnwidth]{scatter-markov.eps}
+%\caption{Scattered FSMC model for a single scatter.} \label{fig:scatter-markov}
+%\end{figure}
+
+
+
+
+
+%\begin{figure}[!h]
+%\centering
+%\includegraphics[width=0.45\columnwidth]{beamspace_aoa_N-40.eps}
+%\caption{The beamspace channel at the angular domain for a user at $45^\circ$ with $N$ elements at the transmitter antenna array.} \label{fig:beamspace-aoa}
+%\end{figure}
+
+
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{0.9\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{gnatt-y1}
+%        \caption{First year.}\label{fig:y1}
+%    \end{subfigure}
+%   \quad%
+%       \begin{subfigure}[t]{0.9\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{gnatt-y2}
+%        \caption{Second year.}\label{fig:y2}
+%    \end{subfigure}
+%    \quad%
+%       \begin{subfigure}[t]{0.9\textwidth}
+%        \centering
+%        \includegraphics[width=1\columnwidth]{gnatt-y3}
+%        \caption{Third year.}\label{fig:y3}
+%    \end{subfigure}
+%\caption{研究執行步驟與進度。} \label{fig:project-timeline}
+%\end{figure}
+
+%\vspace{1em}
+\noindent \textbf{(三)	預期完成之工作項目、成果及績效。}
+
+\noindent \underline{1. 預期完成之工作項目}
+
+本研究計畫預計完成於5G系統層級模擬器支援eMBB的兩項關鍵技術所需應對功能，與3GPP相關文件之校準，並根據ITU-R之模擬規範，評估3GPP所提之eMBB技術之效能。預期完成下列工作:
+
+\noindent \textbf{多用戶多重輸入輸出之多層次訊號傳輸 (Multi-Layer MU-MIMO)}
+\begin{itemize}[noitemsep]
+
+   \item 完成支援多層次MU-MIMO之user selection機制研究並與SLS整合。
+   \item 完成MU-MIMO之link adaptation (MCS選擇)機制研究並與SLS整合。
+   \item 完成Precoder設計並與SLS整合。
+\end{itemize}
+
+\noindent \textbf{毫米波多點協同傳輸 (NR-JT)}
+\begin{itemize}[noitemsep]
+\item 完成支援NR-JT的scheduler。
+\item 完成並實現channel access function。
+\item 完成對不同TRP的SINR計算。
+\end{itemize}
+
+
+
+
+\noindent \underline{2.~對於參與之工作人員，預期可獲之訓練}
+
+本計畫結合學校研發人力與法人密切合作，參與的研究生除由計畫主持人帶領執行研究內容，亦將與法人研發單位直接接觸，參與計畫人員將獲得以下訓練
+
+\begin{itemize}[noitemsep]
+\item 學習以理論為基礎發展解決實務問題的工程方法。
+\item 深入了解5G通訊系統，養成產業所需研發能力。
+\item 提升對通訊系統的演算法設計與程式撰寫技巧。
+\item 學習執行系統模擬、效能驗證、實際量測等技能。
+\item 精進專業報告撰寫與講演能力。
+\end{itemize}
+
+\vspace{1em}%
+
+\noindent \underline{3.~預期完成之研究成果及績效}
+
+本計畫將針對「5G增強型行動寬頻通訊」所需之關鍵技術，研究可達成高頻譜效益之\textbf{多用戶多重輸入輸出}與\textbf{協調多點傳輸技術}，預期成果如下
+\begin{itemize}[noitemsep]
+ \item 「增強型行動寬頻通訊所需之多用戶多重輸入輸出技術」之研究報告。
+ \item 「支援多層次信號之多用戶多重輸入輸出技術」之程式碼
+ \item 學術論文發表:預計至少發表通訊領域主要國際期刊與國際會議各三篇。
+ \item 專利與國際標準貢獻：透過與相關研究單位與校內育成中心合作，將研究成果標準化，尋求申請專利與國際標準的機會。
+\end{itemize}
+
+
+\vspace{1em}%
+\noindent \underline{4.~對於學術研究、國家發展及其他應用方面預期之貢獻}
+
+隨著5G第一版標準於2017年底制定完成，為能在關鍵技術發展取得一席之地，鞏固我國自有關鍵智財權，積極參與5G標準制定為必要途徑，然世界各國競爭激烈，若能整合產學界的研發能量，可大幅加速技術發展腳步，有助我國立足於未來行動通訊市場。本計畫結合學理與實務，在學術研究方面，基於多天線的 limited feedback仍有研究價直
+
+有別於傳統無線通訊，毫米波需要全新的空中界面以滿足5G服務需求，本計畫所研究的group-based beam management技術，為新穎的想法，目前雖有少數已發表之學術論文討論beam-based的相關技術，但尚未見將用戶群組的概念帶入解決beam management的問題，此外，延伸自CoMP的beam cooperation也是本計畫提出的創新想法，同時，利用NOMA提升毫米波通訊的頻譜效益亦是重要的研究議題。在國家發展貢獻方面，本計畫的主題與當前政府與產學界欲在5G技術發展取得先機的目標一致，研究成果可為新興應用服務提供無線空中界面的支援，例如beam-based NOMA可滿足物聯網所需的大量裝置接取(mMTC應用情境）、beam cooperation可提供虛擬實境所需的無線傳輸速度（eMBB應用情境)、group-based beam management可應用於汽車通訊等(URLLC應用情境)，我們也將積極與國內研發單位合作，將研發成果轉移給業界。在其他應用方面，本計畫所發展的毫米波系統平台，利用軟體定義無線電有助開發彈性與整合，我們將致力將此平台在適當授權的條件下開放給有興趣的單位使用，有助提昇國內研發能量。
+
+
+
+
+
+
+
+%\vspace{1em}%
+%\noindent \underline{(四) 整合型研究計畫說明。}
+%
+%\n 針對毫米波通訊相關技術之研究，子計畫一研究類比前端電路非理想效應(如低解析度的ADC、I/Q不平衡、與載波頻率偏移等)對單輸入單輸出系統基頻接收器演算法性能之影響與改善之道，其結果可供子計畫二延伸使用。而子計畫二針對多輸入多輸出系統研究相關訊號處理，其結果可供子計畫一參考，以期子計畫一設計之演算法可以延伸至MIMO系統。子計畫三、子計畫四及子計畫五相關性密切：雖然子計畫三及子計畫四是以B4G(5G)行動通訊系統為系統環境，與子計畫五針對類ad hoc網路不同，但子計畫三將探討B4G(5G)行動通訊系統D2D通訊之deafness、blockage及scheduling等問題，與子計畫五探討類ad hoc網路系統之研究議題相似，兩子計畫研發技術的交流與討論可行性高；而子計畫四將探討通道遮斷(link blockage)之偵測機制與解決技術，更可提供子計畫三與子計畫五在降低遮斷效應困擾的實體層解決方法；相對的，子計畫三與子計畫五可提供MAC層協定以協助、提升子計畫四處理blockage之能力。
+
+
+%\begin{itemize}
+%\item 為探討基地台與用戶分佈對密集小細胞系統的影響，各子計劃皆以PPP模型決定基地台與用戶分佈，彼此共享模擬平台。
+%\item 本計畫與子計畫一相互交流Massive MIMO通道估測、回傳及相關訊號處理技術，共同討論通道估測誤差與所需頻寬對小細胞系統負載與干擾控制的影響與解決方法。
+%\item 子計畫二與本計畫在小細胞系統的資源管理議題密切相關，共同討論。
+%\item 子計畫四研究的移動用戶交接直接影響基地台之負載控制，並間接影響用戶的服務品質，本計畫所提出之load-based cell selection概念相較於maximum received signal power的方法可有效避免用戶交接造成基地台過載，惟如何設計load-based cell selection避免頻繁用戶交接仍有待與子計畫四共同研究。
+%\end{itemize}
+
+%\begin{thebibliography}{10}
+%{\footnotesize
+\bibliographystyle{IEEEtran}
+\bibliography{madmf,IEEEabrv}
+%}
+
+%\bibitem{Soh2013}
+%Y.~S. Soh, T.~Q. Quek, M.~Kountouris, and H.~Shin, ``Energy efficient
+%  heterogeneous cellular networks,'' \emph{IEEE J. Select. Areas Commun.},
+%  vol.~31, no.~5, pp. 840--850, May 2013.
+%
+%\bibitem{Jacob2013}
+%M.~Jacob, S.~Priebe, T.~Kurner, M.~Peter, M.~Wisotzki, R.~Felbecker, and
+%  W.~Keusgen, ``Extension and validation of the {IEEE 802.11ad 60 GHz} human
+%  blockage model,'' in \emph{Proc. 7th European Conference on Antennas and
+%  Propagation (EuCAP)}, Apr. 8-12 2013, pp. 2806--2810.
+%
+%\bibitem{Samimi2016}
+%M.~K. Samimi and T.~S. Rappaport, ``Local multipath model parameters for
+%  generating {5G} millimeter-wave {3GPP}-like channel impulse response,'' in
+%  \emph{Proc. 10th Eur. Conf. Antennas Propag. (EuCAP)}, Davos, Switzerland,
+%  Apr. 10-15 2016.
+
+%\bibitem{Samimi2016a}
+%------, ``{3-D} millimeter-wave statistical channel model for {5G} wireless
+%  system design,'' \emph{IEEE Trans. Microwave Theory Tech.}, vol.~64, no.~7,
+%  pp. 2207--2225, July 2016.
+%
+%\bibitem{Collonge2004}
+%S.~Collonge, G.~Zaharia, and G.~E. Zein, ``Influence of the human activity on
+%  wide-band characteristics of the 60 ghz indoor radio channel,'' \emph{IEEE
+%  Trans. Wireless Commun.}, vol.~3, no.~6, pp. 2396--2406, Nov. 2004.
+%
+%\bibitem{Medbo2013}
+%J.~Medbo and F.~Harrysson, ``Channel modeling for the stationary {UE}
+%  scenario,'' in \emph{Proc. European Conference on Antennas and Propagation
+%  (EuCAP)}, Sweden, Apr. 8-12 2013, pp. 2811--2815.
+%
+%\bibitem{Nurmela2015}
+%V.~Nurmela and et~al., ``Metis channel model,'' \url{https://www.metis2020.com/wp-content/uploads/deliverables/METIS_D1.4 v1.0.pdf}, July 2015.
+
+%\bibitem{MacCartney2016}
+%G.~R. MacCartney, S.~Deng, S.~Sun, and T.~S. Rappaport, ``Millimeter-wave human
+%  blockage at {73} ghz with a simple double knife-edge diffraction model and
+%  extension for directional antennas,'' in \emph{Proc. IEEE VTC-Fall},
+%  Montreal, Canada, Spet. 18-21 2016.
+%
+%\bibitem{Bai2014}
+%T.~Bai, R.~Vaze, and R.~W. Heath, ``Analysis of blockage effects on urban
+%  cellular networks,'' \emph{IEEE Trans. Wireless Commun.}, vol.~13, no.~9, pp.
+%  5070--5083, Sept. 2014.
+%
+%\bibitem{Liu2009a}
+%K.-H. Liu, X.~S. Shen, R.~Zhang, and L.~Cai, ``Performance analysis of
+%  distributed reservation protocol for {UWB}-based {WPAN},'' \emph{IEEE Trans.
+%  Veh. Technol.}, vol.~58, no.~2, pp. 902--913, Feb. 2009.
+%
+%\bibitem{Sur2015}
+%S.~Sur, V.~Venkateswaran, X.~Zhang, and P.~Ramanathan, ``60 ghz indoor
+%  networking through flexible beams: A link-level profiling,'' in \emph{Proc.
+%  ACM International Conference on Measurement and Modeling of Computer Systems
+%  (SIGMETRICS)}, Portland, Oregon, June 15-19 2015, pp. 71--84.
+%
+%\bibitem{SayeedBrady2013}
+%A.~Sayeed and J.~Brady, ``Beamspace {MIMO} for high-dimensional multiuser
+%  communication at millimeter-wave frequencies,'' in \emph{Proc. IEEE
+%  Globecom}, 2013.
+%
+%\bibitem{Gao}
+%X.~Gao, L.~Dai, Y.~Z.~T. Xie, X.~Dai, and Z.~Wang, ``Fast channel tracking for
+%  terahertz beamspace massive {MIMO} systems,'' DOI: 10.1109/TVT.2016.2614994.
+%
+%\bibitem{NitscheFloresKnightlyEtAl2015}
+%T.~Nitsche, A.~B. Flores, E.~W. Knightly, and J.~Widmer, ``Steering with eyes
+%  closed: mm-wave beam steering without in-band measurement,'' in \emph{Proc.
+%  IEEE Int. Conf. Comput. Commun. (INFOCOM)}, Hong Kong, China, Apr. 26-May 1
+%  2015, pp. 2416--2424.
+%
+%\bibitem{AliGonzalez-PrelcicHeath2017}
+%A.~Ali, N.~Gonzalez-Prelcic, and R.~W. Heath, ``Estimating millimeter wave
+%  channels using out-of-band measurements,'' in \emph{Proc. Information Theorey
+%  and Applications (ITA) Workshop}, San Diago, CA, Feb. 12-17 2017.
+
+%\end{thebibliography}
+
+
+%\newpage
+%\noindent {\bf 四、主持人近程及遠程研究發展領域之規劃與期望}\\
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
