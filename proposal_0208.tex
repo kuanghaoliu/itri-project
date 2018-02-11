@@ -80,6 +80,7 @@
 
 \setlist[itemize]{noitemsep, topsep=0pt}
 
+
 %% Customize title using titlespec package
 %\titleformat{\section}{\normalfont\Large\filcenter\bfseries}{\thesection}{1em}{\uppercase}
 
@@ -221,6 +222,12 @@
 
 基於上述研究目標，本計畫將結合學校與法人的研發能量，加速SLS開發，完成與3GPP相關文件之校準，研究成果將有助於5G技術於3GPP會議之提案，為我國在5G發展取得關鍵地位。
 
+\noindent \textbf{D. 研究執行能力與計劃書說明}
+
+本計畫的主要產出為開發可支援多層次訊號傳輸之系統層級模擬器，此模擬器又稱WiSE，為法人單位（工研院)自行研發，計畫申請人過去曾有使用WiSE的經驗，並指導碩士班學生設計符合3GPP標準的異質行動網路換手協定，並於WiSE撰寫演算法，成功完成系統層級模擬，研究結果已撰寫為碩士論文[R1]，並準備投稿至國際會議與期刊。申請人曾使用之WiSE為基本版，技術規格主要以LTE Rel. 8為主，因WiSE更新版本為授權付費使用，於計畫書撰寫期間未能取得更新版本，無法針對模擬器與計畫研究議題相關之功能先行研究。申請人與欲合作之法人單位取得共識，若計畫獲得通過，法人單位將提供模擬程式架構之說明，基於申請人對WiSE的開發經驗與法人單位的協助，應可順利完成計畫任務。
+
+\noindent [R1] 朱慶芸, 控制面和用戶面分離異質網路下藉由移動式中繼站於高速鐵路上之位置輔助換手程序，成功大學電腦與通信工程研究所碩士論文, 2017年7月.
+
 本計畫書後續的架構如下。我們對研究主題相關的文獻進行了詳盡的蒐集與研讀，將現有相關技術整理於C小節。由於相關論文與3GPP技術文件皆以英文撰寫，為免翻譯造成語意誤差，計畫書後將以英文撰寫。
 
 
@@ -259,7 +266,7 @@
 %        \caption{Proposed tramstter structure based on SDR.}\label{fig:sdr-tx}
 %\end{figure}
 
-\noindent \textbf{C. 文獻探討}
+\noindent \textbf{E. 文獻探討}
 
 MU-MIMO is one of the key technologies to improve the spectral efficiency of wireless systems. Traditionally, the radio spectrum is divided into multiple chunks and the eNB transmits one data stream to a user over a dedicate chunk assigned to the user. With multiple transmit antennas, it is possible to transmit multiple data streams to one or several users simultaneously using the same radio resource. Consequently, high spectral efficiency is possible by exploiting spatial multiplexing provided by multiple antennas.
 
@@ -296,6 +303,22 @@ transmitted by the eNB for $S$ number of data streams, and $\mathbf{z}\sim \math
 
 In LTE, precoding is primarily performed based on implicit
 feedback with the following parameters related to channel state information (CSI): \emph{Rank Indicator (RI)}, \emph{Precoding Matrix Indicator (PMI)}, and \emph{Channel Quality Indicator (CQI)}. Since they play the central role on transmit precoding, we explain their definitions in 3GPP specification and how they can be obtained.
+
+\paragraph{Channel direction indicator (CDI)}
+ The channel coefficient, namely, $\mathbf{h}_k$, is essential to the determination of CSI, and it is called the channel direction indicator (CDI) in LTE terminology. Given the codebook $\mathcal{C}=\{\bm{c}_1,\cdots,\bm{c}_N\}$ with size
+$N=2^B$, the spatial direction of UE $k$'s channel, referred to as
+channel direction information (CDI), can be determined according to the
+minimum distance criterion. Denote the normalized channel direction
+indicator (CDI) of UE $k$ as
+\begin{equation}\label{eq:cdi}
+\tilde{\mathbf{h}}_k=\mathbf{h}_k/\norm{\mathbf{h}_k}.
+\end{equation}
+Then the quantized version of $\tilde{\mathbf{h}}_k$ denoted as
+$\hat{\mathbf{h}}_k$ is chosen from the codebook $\mathcal{C}$ as
+\begin{equation}\label{eq:quantized-cdi}
+\hat{\mathbf{h}}_k = \bm{c}_n,~n=\arg \; \max_{1 \leq j \leq N} |\tilde{\mathbf{h}}_k^\mathsf{H} \bm{c}_j^*|
+\end{equation}
+As can be seen, the CDI is obtained by quantizing the normalized channel using $B$ quantization bits.
 
 
 \paragraph{CQI} 
@@ -353,7 +376,7 @@ where $p_k=\frac{P/M}{\norm{\mathbf{w}_{\hat{\mathbf{H}}}(:,k)}^2}$, $\mathbf{w}
 
 \paragraph{RI}
 
-By utilizing spatial multiplexing gain provided by multiple antennas, several data streams or layers can be transmitted simultaneously. The number of layers depends on the instantaneous channel and can be determined via the singular value decomposition (SCD) of $\mathbf{H}$ given by
+By utilizing spatial multiplexing gain provided by multiple antennas, several data streams or layers can be transmitted simultaneously. The number of layers depends on the instantaneous channel and can be determined via the singular value decomposition (SVD) of $\mathbf{H}$ given by
 \begin{equation}
 \mathbf{H}=\mathbf{U} \boldsymbol{\Sigma} \mathbf{V}^\mathsf{H}.
 \end{equation}
@@ -375,6 +398,25 @@ Since the squared singular values $\{\sigma_i^2\}$ are the eigenvalues $\{\lambd
 &= \sum_{i=1}^{N_{\min}} \lambda_i = \sum_{i=1}^{N_{\min}} \sigma_i^2.
 \end{align}
 In essential, the dominant eigenvalues carry most of the channel power, the UE can determine the number of transmit streams by selecting the number of dominant eigenvalues. In practice, this is often done by employing a threshold to determine the dominant eigenvalues.
+
+\paragraph{CSI acquisition}
+
+\begin{itemize}
+\item Orthogonal CSI-RS: Assign each transmit antenna element with one CSI-RS port. This allows the channel response being measured for all the transmit antenna elements. However, the required number of CSI-RS port would grow with the number of transmit antenna elements and thus becomes resource consuming for the system with large antenna arrays.
+\item Separate CSI-RS: Employ two sets of CSI-RS ports with one set dedicated to one of the vertical antenna element subarrays and the other set assigned to one of the horizontal antenna element subarrays. This allows the horizontal CSI and vertical CSI to be measured independently by the UE with the least resource consumption. However, the CSI measured by partial antenna elements may not be as accurate as that measured by using all antenna elements.
+\item Elevation beam-specific RS: Assign each vertical antenna subarray with one CRI-RS that is different across different vertical antenna subarrays. The training symbol sent by one vertical antenna subarray is precoded to construct one elevation beam. Accordingly, the UE can measures the equivalent horizontal CSI, namely, $\tilde{\mathbf{H}}^{(h)} = \mathbf{H} \mathbf{W}^{(v)}$,  where each column in $\tilde{\mathbf{H}}^{(h)}$ corresponds to one elevation beam or equivalently, a virtual antenna seen by the UE. This scheme reuses the existing CSI-RS and thus is transparent to UEs about the use of FD-MIMO. Table~\ref{tab:fd-mimo-csi} shows the number of required CSI-RS ports for the three schemes where $Q$ is the available number of vertical precoders, which is generally less than the number of vertical antenna elements.
+\end{itemize}
+
+\begin{table}[ht]
+\caption{Required number of CSI-RS} \label{tab:fd-mimo-csi} \centering
+  \begin{tabular}{|c|c|c|}
+  \hline
+Orthogonal & Separate & Vertical-Precoded \\
+\hline
+$N_T^{(h)} N_T^{(v)}$ & $N_T^{(h)}+N_T^{(v)} - 1$ & $QN_T^{(h)}$ \\
+  \hline
+  \end{tabular}
+\end{table}
 
 %=================================================================
 % CSI
@@ -564,6 +606,9 @@ Based on the above agreement, several open issues are open and will be discussed
 
 \noindent \textbf{A. 研究方法}
 
+本節說明支援多層次訊號之MU-MIMO與NR-JT的研究方法。
+
+
 \noindent \textbf{A.1 User Selection Strategy for MU-MIMO}
 
 在MU-MIMO傳輸模式下，基地台需適當的選擇數個用戶，以最大化整體傳輸率，此問題有兩大挑戰，(1) 能夠最大化整體傳輸率的用戶集合必定滿足兩個條件：接受訊號最大與用戶間干擾最小，接收訊號品質最大化可透過用戶自行量測的通道資訊，選擇最佳的預編碼後告知基地台，而基地台根據用戶回傳的資訊，若數個用戶預編碼後的通道彼此近乎正交，則選擇這群用戶進行MU-MIMO傳輸可獲得最大傳輸率，我們在\texttt{C.3}小節說明過這種方法。然而當用戶數高於兩個以上，選擇\underline{彼此正交}的用戶變得極為困難，(2)用戶回傳的通道資訊受到量化及回傳延遲的影響，進一步降低選擇的用戶集合的精確度。
@@ -579,36 +624,62 @@ Based on the above agreement, several open issues are open and will be discussed
 Recall the received signal of $K$ users at the downlink as given by (\ref{eq:rec-sig-mumimo}). Following the dual-stage feedback, the precoding matrix $\mathbf{P}$ can be obtained by concatenating two precoders $\mathbf{W}_1$ and $\mathbf{W}_2$. In particular, the precoder $W_1 \in \mathbb{C}^{N_T \times b}$ is used to (i) reduce the channel dimension from $K\times N_T$ to $K\times b$ where $b \leq N_T$ is a design parameter, and (ii) mitigate the mutual interference among users in different groups. We will explain the user grouping scheme later. On the other hand, the precoding matrix $\mathbf{W}_2 \in \mathbb{C}^{b\times S}$ is used to mitigate the inter-user interference within the same group. Here $S$ is the total number of layers to be supported and it is bounded by $S \leq \min\{ N_T, K \}$.
 
 We shall first discuss how the precoding matrix $\mathbf{W}_1$ can be designed. By rewriting the received signal model in (\ref{eq:rec-sig-mumimo}), we have
-\begin{align}
+\begin{align}\label{eq:effective-rec-sig-mumimo}
 \mathbf{y} &= \mathbf{H}^\mathsf{H}(\mathbf{W}_1 \mathbf{W}_2)\mathbf{d} + \mathbf{z} \nonumber \\
-&= (\mathbf{W}_1^\mathbf{H} \mathbf{H})^\mathsf{H} \mathbf{W}_2\mathbf{d} + \mathbf{z} = \underline{\mathbf{H}}^\mathsf{H} \mathbf{W}_2 + \mathbf{z}.
+&= (\mathbf{W}_1^\mathbf{H} \mathbf{H})^\mathsf{H} \mathbf{W}_2\mathbf{d} + \mathbf{z} = \underline{\mathbf{H}}^\mathsf{H} \mathbf{W}_2 \mathbf{d} + \mathbf{z}.
 \end{align}
-For convenience, let us call the channel precoded by $\mathbf{W}_1$ as the effective channel $\underline{\mathbf{H}}=\mathbf{W}_1^\mathsf{H} \mathbf{H}$. For each user, it estimates and feeds back the effective channel precoded by $\mathbf{W}_1$. Since $\mathbf{W}_1$ tracks the long-term channel characteristics (see Section \texttt{C.2}), the feedback frequency is much slower than the direct feedback of $\mathbf{H}$. Besides, the effective channel has a lower dimension than $\mathbf{H}$.
+For convenience, let us call the channel precoded by $\mathbf{W}_1$ as the effective channel $\underline{\mathbf{H}}=\mathbf{W}_1^\mathsf{H} \mathbf{H}$. For each user, it estimates and feeds back the effective channel precoded by $\mathbf{W}_1$. Since $\mathbf{W}_1$ tracks the long-term channel characteristics (see Section \texttt{C.2}), the feedback frequency is much slower than the direct feedback of $\mathbf{H}$. Besides, the effective channel has a lower dimension than $\mathbf{H}$. 
 
-The long-term channel characteristis can be captured in various forms, such as channel covariance matrix, angle of arrival (AoA)/angle of departure (AoD), and so on. A natrual and convincing choice for implementing MU-MIMO is the covariance matrix of the MIMO channel, which captures the spatial information of the channel and depends on the propagation environment with short-term channel variations being averaged. The channel covariance matrix is defined as $\mathbf{R}=\mathbb{E}[\mathbf{H}^\mathsf{H}\mathbf{H}]$ and its SVD is given by
-\begin{equation}
-\mathbf{R}= \mathbf{U} \boldsymbol{\Delta} \mathbf{U}^\mathsf{H}.
+The long-term channel characteristics can be captured in various forms, such as channel covariance matrix, angle of arrival (AoA)/angle of departure (AoD), and so on. A natural and convincing choice for MU-MIMO is the covariance matrix of the MIMO channel. As the second-order statistics of the channel, the covariance matrix changes less frequently than the small-scale fading and thus it stays valid longer than the instantaneous CSI. In addition, it captures the spatial information of the channel that depends on the propagation environment with short-term channel variations being averaged. The channel covariance matrix is defined as $\mathbf{R}=\mathbb{E}[\mathbf{H}^\mathsf{H}\mathbf{H}]$ and its SVD is given by
+\begin{equation}\label{eq:covariance-matrix}
+\mathbf{R}= \mathbf{U} \boldsymbol{\Lambda} \mathbf{U}^\mathsf{H},
 \end{equation} 
-The use of channel covariance matrix for MU-MIMO has been discussed in LTE~\cite{R1-100190,R1-094920}. For the case of massive MIMO, several methods for estimating the covariance matrix have also been proposed lately~\cite{ 
+whose rank is denoted by $r$ 
+The use of channel covariance matrix has been widely studied in the MIMO literature for different purposes, e.g., robust channel estimation and transmit precoder design. It has also been considered in LTE~\cite{R1-100190,R1-094920} for both SU-MIMO and MU-MIMO. For the case of massive MIMO, several methods for estimating the covariance matrix have also been proposed lately~\cite{Ghosh2012,Neumann}. 
+
+Let us return to the user selection problem for MU-MIMO. To maximize the downlink signal, the eNB would like to transmit the signal along the user's channel direction. If a user has the channel direction coinciding with another one, simultaneously transmitting to these two users will cause severe mutual interference. Hence the eNB should find out those users that have the same or similar channel direction and not to schedule them simultaneously. This implies more orthogonal resources are used to avoid strong MUI, resulting in low spectral efficiency when the user population is large. Instead, those users with the similar channel direction can be grouped and the eNB tries to avoid their mutual interference by manipulating the signal direction via transmit precoding. In this way, the users within the same group is interference free given a well-designed precoder. Fortunately many linear precoders with acceptable performance are available, e.g., zero-forcing (ZF) precoding. We note that MUI mitigation can be carried out using the precoder $\mathbf{W}_2$ in (\ref{eq:effective-rec-sig-mumimo}).
+
+From the above discussion, we propose to select users for MU-MIMO based on the spatial property of the channels. The idea is to partition users in different groups where the users in the same group possess similar spatial property characterized by the channel covariance matrix. While the idea is simple, several questions deserve further investigations.
+
+\begin{itemize}
+\item How to define if arbitrary two or more users have the similar covariance matrix? One possibility is to determine the similarity between two covariance matrices based on their \emph{mutual distance}. Many distance measures may be considered, for example, matrix norms, Kullback–Leibler divergence, chordal distance~, etc. A shortcoming of distance-based method is that the covariance matrices reported from users are quantized before feedback. As a result, an accurate estimate of the distance is difficult with the quantized feedback. Another possibility is to partition the spatial domain into predefined sectors via \emph{spatial filtering}. With this approach, two or more users are said to be in the same group if they fall in the same sector. This approach is also known as beamspace MIMO~\cite{SayeedBrady2013}. The notion of beamspace MIMO can be applied to the existing LTE system by employing some fixed receive beams at the eNB through analog beamforming. By identifying the strongest receive beam as the user's spatial direction, the eNB can determine the user group accordingly. This approach uses uplink CSI directly instead of user feedback to determine spatial directions and thus it is immune to quantization or feedback errors.
+\end{itemize}
+
+\paragraph{Inter-group interference mitigation}
+
+When the intra-group interference (i.e., MUI within the group ) can be removed by the precoder $\mathbf{W}_2$, the remaining interference would be those from other groups (i.e., inter-group interference) and neighboring cells (i.e., inter-cell interference). Since the transmitted signal strength drops exponentially fast as the distance increases, the inter-cell interference is often much small than the inter-group interference, unless the user is at the cell boundary. For cell-boundary users, strong inter-cell interference can be mitigated through CoMP, which will be covered in the second part of this project.
+
+To mitigate inter-group interference, it s essential to ensure the transmissions to different groups are orthogonal. This can be achived by employing a beamformer, which generates multiple beams pointing to orthogonal directions along the eigenvectors of the channel's covariance matrix~\cite{Zhou2003}. In other words, mitigating the inter-group interference is the well-known \emph{eigen-beamforming} problem. In our work, the precoder $\mathbf{W}_1$ serves as the eigen-beamformer, and thus we refer to $\mathbf{W}_1$ as the \emph{pre-beamfomer}.
+
+The eigen-beamforming design is based on the structure of the channel covariance matrix given in (\ref{eq:covariance-matrix}). To see this, rewrite the MIMO channel matrix in the form of the Karhunen-Loeve representation. For the $k$th user, its channel is \begin{equation}
+\mathbf{h}_k = \mathbf{U}_k \boldsymbol{\Lambda}_k \mathbf{U}_k^\mathsf{H}
+\end{equation}
+where $\mathbf{U}_k \in \mathbb{C}^{N_t \times r}$ is a tall unitary matrix of the eigenvector of the covariance matrix of $\mathbf{R}_k =\mathbb{E}[\mathbf{h}_k \mathbf{h}_k^\mathsf{H}]$ corresponding to the nonzero eigenvalues. If the $K$ users are partitioned into $G$ groups such that the overall channel matrix is $\mathbf{H}=[\mathbf{H}_1, \cdots, \mathbf{H}_G]$, the channel matrix corresponding to group $g$ can be represented as
+\begin{equation}
+\mathbf{H}_g = \mathbf{U}_g \boldsymbol{\Lambda}_g \mathbf{U}_g^\mathsf{H},
+\end{equation}
+which has rank $r_g$. Similarly, the pre-beamformer $\mathbf{W}_1$ can be partitioned into groups as $\mathbf{W}_1=[\mathbf{w}_1, \cdots, \mathbf{w}_G]$ where $\mathbf{w}_g \in \mathbb{C}^{N_T \times b_g}$ is the pre-beamformer for group $g$. Now we break the effective channel on the per-group basis that gives
+\begin{equation}
+\underline{\mathbf{H}} = \begin{bmatrix} \mathbf{w}_1 \mathbf{H}_1^\mathsf{H} & \mathbf{w}_1 \mathbf{H}_2^\mathsf{H} & \cdots & \mathbf{w}_1 \mathbf{H}_G^\mathsf{H} \\
+\mathbf{w}_2 \mathbf{H}_1^\mathsf{H} & \mathbf{w}_2 \mathbf{H}_2^\mathsf{H} & \cdots & \mathbf{w}_2 \mathbf{H}_G^\mathsf{H} \\
+\vdots & \vdots & \ddots & \vdots \\
+\mathbf{w}_G \mathbf{H}_1^\mathsf{H} & \mathbf{w}_G \mathbf{H}_2^\mathsf{H} & \cdots & \mathbf{w}_G \mathbf{H}_G^\mathsf{H}
+\end{bmatrix}
+\end{equation}
+where $\mathbf{w}_g \mathbf{H}_{g'}^\mathsf{H} \in \mathbb{C}^{b_{g'} \times K_g}$ is the effective channel of group $g$ with $K_g$ users. The $g$th column of $\underline{\mathbf{H}}$ in (\ref{eq:effective-rec-sig-mumimo})  is the pre-beamformed channel of group $g$. Meanwhile, the diagonal submatrices of $\underline{\mathbf{H}}$ conveys the user signal of the $g$th group while the off-diagonal submatrices introduce the inter-group interference. To remove the inter-group interference, we should choose the pre-beamformer $\mathbf{w}_g$ for group $g$ such that
+\begin{equation}\label{eq:zero-inter-group-interference}
+\mathbf{w}_g \mathbf{H}_{g'}^\mathsf{H} \approx 0, \forall~g' \neq g.
+\end{equation}
+The condition in (\ref{eq:zero-inter-group-interference}) suggests the design principle of the pre-beamfomer $\mathbf{W}_1$. An intuitive choice that satisfies (\ref{eq:zero-inter-group-interference}) is the block diagonalization (BD) method~\cite{Cho2010}, where regulates the signal following the directions of the null space of $\mathbf{H}_g$. Although the pre-beamfomer based on BD is interference free across different groups, it does not maximize the strength of the intended signal. Other methods that achieve the same goal as BD are possible but we leave the problem of designing a better pre-beamformer for further study.
 
 
-\noindent \textbf{A.1 CSI acquisition}
+The goal is to support as many data layers as possible subject to the channel condition. By channel condition it means the channel rank as explained in Sec.~\textbf{C.1}. 
 
-%\paragraph{Channel direction indicator (CDI)}
-% The channel coefficient, namely, $\mathbf{h}_k$, is essential to the determination of CSI, and it is called the channel direction indicator (CDI) in LTE terminology. Given the codebook $\mathcal{C}=\{\bm{c}_1,\cdots,\bm{c}_N\}$ with size
-%$N=2^B$, the spatial direction of UE $k$'s channel, referred to as
-%channel direction information (CDI), can be determined according to the
-%minimum distance criterion. Denote the normalized channel direction
-%indicator (CDI) of UE $k$ as
-%\begin{equation}\label{eq:cdi}
-%\tilde{\mathbf{h}}_k=\mathbf{h}_k/\norm{\mathbf{h}_k}.
-%\end{equation}
-%Then the quantized version of $\tilde{\mathbf{h}}_k$ denoted as
-%$\hat{\mathbf{h}}_k$ is chosen from the codebook $\mathcal{C}$ as
-%\begin{equation}\label{eq:quantized-cdi}
-%\hat{\mathbf{h}}_k = \bm{c}_n,~n=\arg \; \max_{1 \leq j \leq N} |\tilde{\mathbf{h}}_k^\mathsf{H} \bm{c}_j^*|
-%\end{equation}
-%As can be seen, the CDI is obtained by quantizing the normalized channel using $B$ quantization bits.
+
+If a certain user selection scheme is in place such that group  
+
+
+
 
 
 %=================================================================
@@ -639,22 +710,7 @@ The use of channel covariance matrix for MU-MIMO has been discussed in LTE~\cite
 %    \caption{Antenna-domain vs. beam-domain MIMO channel representation.}\label{fig:MIMO-channel}
 %\end{figure}
 
-\begin{itemize}
-\item Orthogonal CSI-RS: Assign each transmit antenna element with one CSI-RS port. This allows the channel response being measured for all the transmit antenna elements. However, the required number of CSI-RS port would grow with the number of transmit antenna elements and thus becomes resource consuming for the system with large antenna arrays.
-\item Separate CSI-RS: Employ two sets of CSI-RS ports with one set dedicated to one of the vertical antenna element subarrays and the other set assigned to one of the horizontal antenna element subarrays. This allows the horizontal CSI and vertical CSI to be measured independently by the UE with the least resource consumption. However, the CSI measured by partial antenna elements may not be as accurate as that measured by using all antenna elements.
-\item Elevation beam-specific RS: Assign each vertical antenna subarray with one CRI-RS that is different across different vertical antenna subarrays. The training symbol sent by one vertical antenna subarray is precoded to construct one elevation beam. Accordingly, the UE can measures the equivalent horizontal CSI, namely, $\tilde{\mathbf{H}}^{(h)} = \mathbf{H} \mathbf{W}^{(v)}$,  where each column in $\tilde{\mathbf{H}}^{(h)}$ corresponds to one elevation beam or equivalently, a virtual antenna seen by the UE. This scheme reuses the existing CSI-RS and thus is transparent to UEs about the use of FD-MIMO. Table~\ref{tab:fd-mimo-csi} shows the number of required CSI-RS ports for the three schemes where $Q$ is the available number of vertical precoders, which is generally less than the number of vertical antenna elements.
-\end{itemize}
 
-\begin{table}[ht]
-\caption{Required number of CSI-RS} \label{tab:fd-mimo-csi} \centering
-  \begin{tabular}{|c|c|c|}
-  \hline
-Orthogonal & Separate & Vertical-Precoded \\
-\hline
-$N_T^{(h)} N_T^{(v)}$ & $N_T^{(h)}+N_T^{(v)} - 1$ & $QN_T^{(h)}$ \\
-  \hline
-  \end{tabular}
-\end{table}
 
 
 
